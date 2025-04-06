@@ -1,7 +1,9 @@
 import { useAuth } from '../contexts/AuthContext';
 
-// Fix the API_URL to include /api path
-const API_URL = `${import.meta.env.VITE_API_URL}/api`;
+// Fix the API_URL to avoid double slashes
+const API_URL = import.meta.env.VITE_API_URL.endsWith('/') 
+  ? `${import.meta.env.VITE_API_URL}api` 
+  : `${import.meta.env.VITE_API_URL}/api`;
 
 // Helper to handle API responses
 const handleResponse = async (response) => {
@@ -28,9 +30,15 @@ export const fetchDigests = async (filters = {}, token) => {
     headers['Authorization'] = `Bearer ${token}`;
   }
   
-  const response = await fetch(`${API_URL}/digests?${queryParams.toString()}`, {
+  // Log the request URL for debugging
+  const requestUrl = `${API_URL}/digests?${queryParams.toString()}`;
+  console.log('Fetching from:', requestUrl);
+  
+  const response = await fetch(requestUrl, {
     method: 'GET',
-    headers
+    headers,
+    mode: 'cors',
+    credentials: 'same-origin'
   });
   
   return handleResponse(response);
