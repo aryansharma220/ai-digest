@@ -47,7 +47,7 @@ def main():
         from pymongo import MongoClient
         mongodb_uri = os.getenv('MONGODB_URI')
         client = MongoClient(mongodb_uri)
-        digest_db = client.ai_discovery_digest
+        digest_db = client.ai_discovery_digest  # This database stores frontend-ready summaries
         
         # Initialize summarizer
         summarizer = DigestSummarizer(source_db, digest_db)
