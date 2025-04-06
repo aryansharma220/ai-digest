@@ -1,194 +1,223 @@
-# AI Discovery Agent
+# AI Digest
 
-## Overview
-An intelligent agent system that automatically discovers, aggregates, and summarizes the latest developments in AI/ML from GitHub, Hugging Face, and ArXiv. Perfect for researchers, developers, and AI enthusiasts who want to stay updated with the fast-moving AI landscape.
+AI Digest is a modern platform that automatically collects, summarizes, and categorizes the latest developments in artificial intelligence from multiple sources including GitHub, Hugging Face, and ArXiv. Stay ahead of the AI revolution with personalized content delivered in a digestible format.
+
+![AI Digest Dashboard](./screenshots/dashboard.png)
+*[Screenshot placeholder: Main dashboard showing digest cards]*
+
+## Table of Contents
+- [Features](#features)
+- [Demo](#demo)
+- [Architecture](#architecture)
+- [Technology Stack](#technology-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Screenshots](#screenshots)
+- [Future Improvements and Implementations](#future-improvements-and-implementations)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
 ## Features
-- **Multi-Source Aggregation**: Collects data from multiple platforms including:
-  - **GitHub**: Fetches trending and newly created repositories related to AI and ML.
-  - **Hugging Face**: Retrieves new and popular models and datasets.
-  - **ArXiv**: Queries for the latest AI-related research papers.
 
-- **Workflow Nodes**: Implements a series of nodes to process and manage data:
-  - **Fetchers**: Nodes to pull data from each source.
-  - **Summarizer**: Summarizes content using advanced AI models.
-  - **Tagger**: Classifies entries into relevant categories.
-  - **Storage**: Saves summarized data into a database.
-  - **Digest Generator**: Optionally creates summary digests for users.
+- **Multi-Source Aggregation**: Collect the latest AI developments from GitHub, Hugging Face, and ArXiv in one place
+- **AI-Powered Summaries**: Advanced AI models generate concise summaries of complex research papers and repositories
+- **Smart Categorization**: Automatic tagging and categorization for easy navigation (LLMs, computer vision, NLP, etc.)
+- **Personalized Digest**: Set your preferences to receive content tailored to your interests
+- **Dark/Light Mode**: Modern UI with theme support for comfortable reading in any environment
+- **User Authentication**: Secure sign-in options including Google OAuth
+- **Responsive Design**: Fully responsive interface works on all devices
 
-- **User Query Agent**: Allows users to ask specific questions about the latest developments in AI.
+## Demo
 
-## Requirements
-- Python 3.8+
-- MongoDB 4.4+
-- Git
-- API keys for:
-  - GitHub
-  - Hugging Face Hub
-  - ArXiv (no key needed, but rate limits apply)
+[![AI Digest Demo Video](./screenshots/demo-thumbnail.png)](https://youtu.be/your-demo-link)
+*[Video placeholder: Demo video thumbnail linking to YouTube]*
 
-## Installation
+## Architecture
 
-### 1. Clone and Setup
+AI Digest follows a modern web application architecture:
+
+- **Frontend**: React-based single-page application using React Router for navigation
+- **Backend**: Node.js server handling data processing and authentication
+- **AI Processing**: Python-based agents for fetching, summarizing, and categorizing content
+- **Database**: MongoDB for storing user data and content digests
+- **Authentication**: Firebase Authentication for secure user management
+
+![Architecture Diagram](./screenshots/architecture.png)
+*[Diagram placeholder: System architecture diagram]*
+
+## Technology Stack
+
+### Frontend
+- React 18+ with functional components and hooks
+- React Router for navigation
+- Tailwind CSS for styling
+- Heroicons for UI icons
+- React Hot Toast for notifications
+- Firebase SDK for authentication
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- Firebase Admin SDK
+
+### AI Processing
+- Python 3.9+
+- Natural Language Processing libraries
+- GitHub, Hugging Face, and ArXiv APIs
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 14.x or higher
+- Python 3.9 or higher
+- MongoDB
+- Firebase project
+- API keys for GitHub, Hugging Face, and ArXiv (if applicable)
+
+### Installation
+
+1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/ai-discovery-agent.git
-cd ai-discovery-agent
-python -m venv venv
-
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On Unix/MacOS:
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
+git clone https://github.com/yourusername/ai-digest.git
+cd ai-digest
 ```
 
-### 2. Environment Configuration
-Create a `.env` file in the root directory:
+2. Set up the backend
+```bash
+cd backend
+npm install
+cp .env.example .env  # Edit .env with your configuration
+npm run setup
+```
 
-```env
-# API Keys
-GITHUB_TOKEN=your_github_token
-HUGGINGFACE_TOKEN=your_huggingface_token
+3. Set up the AI processing components
+```bash
+cd ../src
+python -m venv venv
+source venv/bin/activate  # On Windows, use venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env  # Edit .env with your API keys
+```
 
-# MongoDB Configuration
-MONGODB_URI=mongodb://localhost:27017/
-DB_NAME=ai_discovery
+4. Set up the frontend
+```bash
+cd ../frontend
+npm install
+cp .env.example .env  # Edit .env with your Firebase configuration
+```
 
-# Agent Configuration
-MAX_REPOS_PER_QUERY=10
-MAX_MODELS_PER_QUERY=20
-MAX_PAPERS_PER_CATEGORY=5
-SUMMARY_MAX_LENGTH=250
+5. Run the application in development mode
+```bash
+# Terminal 1 - Backend
+cd backend
+npm run dev
 
-# Update Frequency (in minutes)
-UPDATE_INTERVAL=60
+# Terminal 2 - Frontend
+cd frontend
+npm run dev
+
+# Terminal 3 - AI Processing (if running separately)
+cd src
+python main.py
 ```
 
 ## Usage
 
-### 1. Running the Agent
-```bash
-# Start the agent
-python src/main.py
+### User Registration and Login
 
-# Run in background mode
-python src/main.py --daemon
+1. Create a new account using email or Google authentication
+2. Set up your preferences for content types (LLMs, computer vision, etc.)
+3. Choose your digest frequency (daily or weekly)
 
-# Run with custom config
-python src/main.py --config custom_config.yaml
-```
+### Browsing Digests
 
-### 2. Query Examples
-```python
-from src.agents.query_agent import QueryAgent
-from src.nodes.storage import Storage
+1. View the latest AI developments on the main dashboard
+2. Filter by categories or sources
+3. Search for specific topics
+4. Bookmark interesting digests for later reading
 
-# Initialize
-storage = Storage("mongodb://localhost:27017/")
-agent = QueryAgent(storage)
+### User Preferences
 
-# Get latest LLM developments
-llms = agent.get_top_llms(week=1)
+1. Update your profile information
+2. Modify content preferences
+3. Change notification settings
+4. Toggle between dark and light mode
 
-# Get NLP research updates
-nlp_updates = agent.get_new_in_nlp()
+## Screenshots
 
-# Get trending topics
-trends = agent.get_trending_topics()
-```
+### Landing Page
+![Landing Page](./screenshots/landing.png)
+*[Screenshot placeholder: Landing page with features and CTAs]*
 
-### 3. Custom Data Collection
-```python
-from src.nodes.fetchers import GitHubFetcher, HuggingFaceFetcher, ArxivFetcher
+### User Dashboard
+![User Dashboard](./screenshots/dashboard-personalized.png)
+*[Screenshot placeholder: Personalized dashboard with user content]*
 
-# Setup fetchers
-github_fetcher = GitHubFetcher(github_token)
-hf_fetcher = HuggingFaceFetcher(hf_token)
-arxiv_fetcher = ArxivFetcher()
+### Digest Detail View
+![Digest Detail](./screenshots/digest-detail.png)
+*[Screenshot placeholder: Detailed view of a single digest]*
 
-# Fetch custom data
-repos = github_fetcher.fetch_trending_repos(keywords=["reinforcement-learning"])
-models = hf_fetcher.fetch_latest_models(limit=5)
-papers = arxiv_fetcher.fetch_latest_papers(categories=["cs.AI", "cs.LG"])
-```
+### User Preferences
+![User Preferences](./screenshots/preferences.png)
+*[Screenshot placeholder: User preferences screen]*
 
-## Data Pipeline
-1. **Collection**: Fetchers gather data from multiple sources
-2. **Processing**: 
-   - Summarizer creates concise summaries
-   - Tagger categorizes and labels content
-3. **Storage**: Processed data is stored in MongoDB
-4. **Query**: QueryAgent provides easy access to stored data
+### Dark Mode
+![Dark Mode](./screenshots/dark-mode.png)
+*[Screenshot placeholder: Application in dark mode]*
 
-## Customization
+## Future Improvements and Implementations
 
-### 1. Adding New Sources
-Create a new fetcher in `src/nodes/fetchers.py`:
-```python
-class CustomSourceFetcher:
-    def __init__(self, api_client):
-        self.api_client = api_client
+### Technical Enhancements
+- **Performance Optimization**: Implement server-side rendering (SSR) or static site generation (SSG) for improved performance and SEO
+- **Caching Strategy**: Advanced caching system to reduce API calls and improve load times
+- **AI Model Upgrades**: Integration with newer large language models for improved summarization quality
+- **GraphQL Migration**: Transition from REST APIs to GraphQL for more efficient data fetching
+- **Microservices Architecture**: Break down the monolithic backend into specialized microservices for improved scalability
 
-    def fetch_data(self):
-        # Implement fetching logic
-        pass
-```
+### User Experience Improvements
+- **Content Recommendation Engine**: Machine learning-powered recommendation system based on user reading habits
+- **Interactive Visualizations**: Data visualization tools for AI research trends and statistics
+- **Customizable Dashboard**: Drag-and-drop interface for personalizing content layout
+- **Offline Support**: Progressive Web App (PWA) features for offline reading capability
+- **Translation Support**: Multi-language support for international users
+est)
+### New Features
+- **User Collaboration**: Shared collections and team workspaces for collaborative research
+- **Content Creation Tools**: Allow users to create and publish their own AI digests
+- **Browser Extension**: Quick access to bookmarking and saving content from any website
+- **Email Digest Integration**: Scheduled email delivery of personalized content
+- **Voice Interaction**: Voice-based navigation and content consumption
 
-### 2. Custom Tagging Rules
-Modify `src/nodes/tagger.py` category keywords:
-```python
-self.category_keywords = {
-    'your_category': {'keyword1', 'keyword2'},
-    # Add more categories...
-}
-```
+### Integration Opportunities
+- **Academic Platforms**: Integration with academic databases like Semantic Scholar and Google Scholar
+- **Developer Tools**: GitHub integration for repository tracking and GitHub Actions support
+- **Learning Platforms**: Connections with online courses and learning resources related to AI topics
+- **Conference Trackers**: Automated summaries of AI conference proceedings and presentations
 
-## Monitoring & Maintenance
+## Roadmap
 
-### Health Checks
-```bash
-# Check agent status
-python scripts/health_check.py
+- [ ] Mobile application (React Native)
+- [ ] Advanced filtering and search capabilities
+- [ ] Community features (comments, discussions)
+- [ ] API access for developers
+- [ ] Integration with additional AI sources
+- [ ] Enhanced recommendation system
 
-# View error logs
-python scripts/view_logs.py
-```
-
-### Database Maintenance
-```bash
-# Backup data
-python scripts/backup_db.py
-
-# Clean old entries
-python scripts/cleanup_old_data.py --days 30
-```
-
-## Contributing
-1. Fork the repository
-2. Create a feature branch
-3. Implement your changes
-4. Add tests for new functionality
-5. Submit a pull request
-
-## Troubleshooting
-
-### Common Issues
-1. **API Rate Limits**: Implement exponential backoff
-2. **MongoDB Connection**: Check MongoDB service status
-3. **Memory Usage**: Adjust batch sizes in config
-
-### Debug Mode
-```bash
-python src/main.py --debug
-```
 
 ## License
-MIT License - See LICENSE file for details
 
-## Support
-- Create an issue for bugs/features
-- Check [Discussions](https://github.com/yourusername/ai-discovery-agent/discussions) for questions
-- Read the [Wiki](https://github.com/yourusername/ai-discovery-agent/wiki) for advanced topics
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+Project Link: [https://github.com/yourusername/ai-digest](https://github.com/yourusername/ai-digest)
+
+---
+
+<p align="center">Made with ❤️ by Your Name</p>
