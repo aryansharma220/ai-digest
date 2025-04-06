@@ -4,11 +4,11 @@ AI Digest is a modern platform that automatically collects, summarizes, and cate
 
 ![image](https://github.com/user-attachments/assets/94bb8858-4d49-4e20-9b3f-179d41720eac)
 
+---
+
 ## Demo
 
-Uploading Product demo intro - Made with Clipchamp.mp4…
-
-
+https://github.com/user-attachments/assets/624f6a9e-57a4-4498-b870-e6387265dd32
 
 
 ## Table of Contents
@@ -23,8 +23,6 @@ Uploading Product demo intro - Made with Clipchamp.mp4…
 - [Screenshots](#screenshots)
 - [Future Improvements and Implementations](#future-improvements-and-implementations)
 - [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Features
@@ -214,6 +212,27 @@ est)
 - [ ] API access for developers
 - [ ] Integration with additional AI sources
 - [ ] Enhanced recommendation system
+
+## 3-Month Roadmap
+- Month 1: MVP & Pilot Launch
+  - Build & deploy MVP with digest UI, scheduler, and basic summarization.
+  - Mock or semi-live data fetching from GitHub, Hugging Face, and ArXiv.
+  - User preference system (topics, frequency) via Firebase/MongoDB.
+  - Pilot with university peers, Discord communities, or LinkedIn followers.
+  - Collect user feedback & track usage patterns.
+- Month 2: Partnerships & Improvements
+  - Reach out to AI newsletters, blogs, and GitHub repo maintainers for cross-promotion.
+  - Add email delivery, advanced filtering (NLP, CV, etc.), and basic analytics dashboard.
+  - Optimize summarization (quality, tone) using prompt engineering.
+  - Implement digest history + export/share features.
+- Month 3: Scaling & Polish
+  - Make data fetching fully automated (via APIs or scrapers).
+  - Scale backend (Node + MongoDB) for multi-user support.
+  - Polish UI/UX and improve mobile responsiveness.
+  - Launch on Product Hunt, Reddit, Dev.to for broader visibility.
+  - Explore monetization: newsletter sponsorships, API access, or Pro plans.
+
+
 
 
 ## Contact
