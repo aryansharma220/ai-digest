@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
 
@@ -10,6 +10,10 @@ function Login() {
   
   const { login, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get the page they were trying to visit before being redirected to login
+  const from = location.state?.from?.pathname || "/dashboard";
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +22,7 @@ function Login() {
       setLoading(true);
       await login(email, password);
       toast.success('Logged in successfully!');
-      navigate('/');
+      navigate(from); // Redirect to the page they were trying to access
     } catch (error) {
       toast.error(error.message || 'Failed to log in');
     } finally {

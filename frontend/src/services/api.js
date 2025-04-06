@@ -63,12 +63,28 @@ export const fetchPersonalizedDigests = async (filters = {}, token) => {
 
 // Fetch a single digest by ID
 export const fetchDigestById = async (id) => {
-  const response = await fetch(`${API_URL}/digests/${id}`, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
-  });
+  console.log('API call to fetch digest with ID:', id);
+  console.log('Endpoint:', `${API_URL}/digests/${id}`);
   
-  return handleResponse(response);
+  try {
+    const response = await fetch(`${API_URL}/digests/${id}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('API error response:', errorData);
+      throw new Error(errorData.message || `Error ${response.status}: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    console.log('API response data:', data);
+    return data;
+  } catch (error) {
+    console.error('Error in fetchDigestById:', error);
+    throw error;
+  }
 };
 
 // Fetch categories

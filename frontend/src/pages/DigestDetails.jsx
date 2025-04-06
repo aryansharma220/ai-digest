@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { CalendarIcon, TagIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { fetchDigestById, addToReadHistory } from '../services/api';
 import { formatDistanceToNow } from 'date-fns';
@@ -8,16 +8,22 @@ import { useAuth } from '../contexts/AuthContext';
 function DigestDetails() {
   const { id } = useParams();
   const { userToken } = useAuth();
+  const navigate = useNavigate();
   
   const [digest, setDigest] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
+  // Log the ID parameter to check if it's coming through correctly
+  console.log('Digest ID from URL:', id);
+  
   useEffect(() => {
     const fetchDigest = async () => {
       try {
         setLoading(true);
+        console.log('Fetching digest with ID:', id);
         const data = await fetchDigestById(id);
+        console.log('Fetched digest:', data);
         setDigest(data);
         
         // Add to read history if logged in
@@ -25,14 +31,16 @@ function DigestDetails() {
           await addToReadHistory(id, userToken).catch(console.error);
         }
       } catch (err) {
+        console.error('Error fetching digest:', err);
         setError('Failed to fetch digest details');
-        console.error(err);
       } finally {
         setLoading(false);
       }
     };
     
-    fetchDigest();
+    if (id) {
+      fetchDigest();
+    }
   }, [id, userToken]);
   
   // Get tag colors based on source
@@ -89,7 +97,7 @@ function DigestDetails() {
   
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden p-6">
-      <Link to="/" className="inline-flex items-center text-indigo-600 hover:text-indigo-500 mb-4">
+      <Link to="/dashboard" className="inline-flex items-center text-indigo-600 hover:text-indigo-500 mb-4">
         <ArrowLeftIcon className="h-4 w-4 mr-1" />
         Back to Dashboard
       </Link>

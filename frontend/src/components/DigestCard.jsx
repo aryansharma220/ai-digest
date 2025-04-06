@@ -1,89 +1,153 @@
 import { Link } from 'react-router-dom';
-import { CalendarIcon, TagIcon } from '@heroicons/react/24/outline';
+import { CalendarIcon, TagIcon, ArrowTopRightOnSquareIcon, BookmarkIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon as BookmarkSolidIcon } from '@heroicons/react/24/solid';
 import { formatDistanceToNow } from 'date-fns';
+import { useState } from 'react';
 
 function DigestCard({ digest }) {
-  const { _id, title, summary, category, source, tags, date_created } = digest;
+  const { _id, title, summary, category, source, tags, date_created, url } = digest;
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   
   // Format date
   const formattedDate = date_created 
     ? formatDistanceToNow(new Date(date_created), { addSuffix: true })
     : 'Unknown date';
   
-  // Get tag colors based on source
-  const getSourceColor = (source) => {
+  // Get source color and gradient
+  const getSourceStyles = (source) => {
     switch (source?.toLowerCase()) {
-      case 'github': return 'bg-blue-100 text-blue-800';
-      case 'huggingface': return 'bg-yellow-100 text-yellow-800';
-      case 'arxiv': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'github':
+        return {
+          tag: 'bg-blue-100 text-blue-800 border-blue-200',
+          gradient: 'from-blue-500 to-indigo-600',
+          icon: '💻'
+        };
+      case 'huggingface':
+        return {
+          tag: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+          gradient: 'from-yellow-500 to-orange-600',
+          icon: '🤗'
+        };
+      case 'arxiv':
+        return {
+          tag: 'bg-red-100 text-red-800 border-red-200',
+          gradient: 'from-red-500 to-pink-600',
+          icon: '📄'
+        };
+      default:
+        return {
+          tag: 'bg-gray-100 text-gray-800 border-gray-200',
+          gradient: 'from-gray-500 to-gray-600',
+          icon: '📊'
+        };
     }
   };
   
-  // Get tag colors based on category
+  // Get category color
   const getCategoryColor = (category) => {
     switch (category?.toLowerCase()) {
-      case 'llm': return 'bg-purple-100 text-purple-800';
-      case 'computer_vision': return 'bg-green-100 text-green-800';
-      case 'reinforcement_learning': return 'bg-blue-100 text-blue-800';
-      case 'nlp': return 'bg-indigo-100 text-indigo-800';
-      case 'mlops': return 'bg-gray-100 text-gray-800';
-      case 'multimodal': return 'bg-pink-100 text-pink-800';
-      case 'research': return 'bg-red-100 text-red-800';
-      case 'ai_tools': return 'bg-orange-100 text-orange-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'llm': return 'bg-purple-100 text-purple-800 border-purple-200';
+      case 'computer_vision': return 'bg-green-100 text-green-800 border-green-200';
+      case 'reinforcement_learning': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'nlp': return 'bg-indigo-100 text-indigo-800 border-indigo-200';
+      case 'mlops': return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'multimodal': return 'bg-pink-100 text-pink-800 border-pink-200';
+      case 'research': return 'bg-red-100 text-red-800 border-red-200';
+      case 'ai_tools': return 'bg-orange-100 text-orange-800 border-orange-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
   
+  const sourceStyles = getSourceStyles(source);
+  
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
-      <div className="p-5 flex-grow">
-        <div className="flex justify-between items-start mb-3">
-          <div className="flex space-x-2">
-            <span className={`text-xs px-2 py-1 rounded ${getSourceColor(source)}`}>
-              {source}
-            </span>
-            <span className={`text-xs px-2 py-1 rounded ${getCategoryColor(category)}`}>
-              {category}
-            </span>
-          </div>
+    <div 
+      className={`bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full transform ${isHovered ? 'scale-[1.02]' : 'scale-100'}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Card header with gradient */}
+      <div className={`bg-gradient-to-r ${sourceStyles.gradient} p-3 flex justify-between items-center`}>
+        <div className="flex items-center space-x-2">
+          <span className="text-xl">{sourceStyles.icon}</span>
+          <span className="text-white font-semibold">{source}</span>
+        </div>
+        <button 
+          onClick={() => setIsBookmarked(!isBookmarked)} 
+          className="text-white hover:text-yellow-300 transition-colors"
+          aria-label={isBookmarked ? "Remove bookmark" : "Add bookmark"}
+        >
+          {isBookmarked ? (
+            <BookmarkSolidIcon className="h-5 w-5 text-yellow-300" />
+          ) : (
+            <BookmarkIcon className="h-5 w-5" />
+          )}
+        </button>
+      </div>
+
+      {/* Card content */}
+      <div className="p-5 flex-grow flex flex-col">
+        <div className="mb-3">
+          <span className={`text-xs px-3 py-1 rounded-full border ${getCategoryColor(category)}`}>
+            {category}
+          </span>
         </div>
         
-        <Link to={`/digest/${_id}`}>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2 hover:text-indigo-600">
+        <Link to={`/digest/${_id}`} className="group">
+          <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
             {title}
           </h3>
         </Link>
         
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+        <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
           {summary}
         </p>
         
-        <div className="flex items-center text-gray-500 text-xs space-x-4">
+        {/* Tags */}
+        {tags && tags.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-3">
+            {tags.slice(0, 3).map(tag => (
+              <span key={tag} className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700">
+                #{tag}
+              </span>
+            ))}
+            {tags.length > 3 && (
+              <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700">
+                +{tags.length - 3}
+              </span>
+            )}
+          </div>
+        )}
+        
+        <div className="flex items-center justify-between text-gray-500 text-xs mt-auto">
           <div className="flex items-center">
             <CalendarIcon className="h-4 w-4 mr-1" />
             {formattedDate}
           </div>
-          
-          {tags && tags.length > 0 && (
-            <div className="flex items-center">
-              <TagIcon className="h-4 w-4 mr-1" />
-              <span className="truncate max-w-[150px]">
-                {tags.slice(0, 2).join(', ')}
-                {tags.length > 2 && '...'}
-              </span>
-            </div>
-          )}
         </div>
       </div>
       
-      <div className="px-5 py-3 bg-gray-50 border-t border-gray-100">
+      {/* Card footer with actions */}
+      <div className="p-4 bg-gray-50 border-t border-gray-100 flex justify-between items-center rounded-b-xl">
         <Link
           to={`/digest/${_id}`}
-          className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+          className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full text-sm font-medium transition-colors shadow-sm hover:shadow"
         >
-          Read more →
+          Read more
         </Link>
+        
+        {url && (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-gray-200 hover:bg-gray-300 rounded-full transition-colors"
+            title="Visit original source"
+          >
+            <ArrowTopRightOnSquareIcon className="h-4 w-4 text-gray-700" />
+          </a>
+        )}
       </div>
     </div>
   );
