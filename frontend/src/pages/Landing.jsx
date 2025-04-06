@@ -147,7 +147,7 @@ function Landing() {
           ))}
         </div>
         
-        {/* Modern animated background gradients */}
+        {/* Modern animated background gradients with improved animation */}
         <div className="absolute top-20 -right-20 w-96 h-96 bg-indigo-400 opacity-20 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
         <div className="absolute top-40 -left-20 w-96 h-96 bg-purple-400 opacity-20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-20 left-40 w-96 h-96 bg-pink-400 opacity-20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
@@ -158,11 +158,11 @@ function Landing() {
         
         <div className="max-w-7xl mx-auto">
           <div className="relative z-10 lg:flex lg:items-center lg:gap-12 min-h-[calc(100vh-5rem)] py-12">
-            {/* Hero content */}
+            {/* Hero content with improved animations */}
             <div className="lg:w-1/2 px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
               <div className="space-y-8">
-                {/* Animated badge */}
-                <div className="inline-flex animate-fadeIn">
+                {/* Animated badge with improved animation */}
+                <div className="inline-flex animate-slideInTop">
                   <span className="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 backdrop-blur-sm text-indigo-600 font-medium px-4 py-1.5 rounded-full text-sm flex items-center gap-2">
                     <span className="flex h-2 w-2">
                       <span className="animate-ping absolute h-2 w-2 rounded-full bg-indigo-400 opacity-75"></span>
@@ -172,18 +172,18 @@ function Landing() {
                   </span>
                 </div>
                 
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight animate-fadeIn">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight animate-slideInRight">
                   <span className="block text-gray-900">Stay ahead of the</span>
                   <span className="block mt-1 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-500 animate-gradient-x">
                     AI revolution
                   </span>
                 </h1>
                 
-                <p className="text-lg md:text-xl text-gray-600 max-w-2xl animate-fadeIn animation-delay-200">
+                <p className="text-lg md:text-xl text-gray-600 max-w-2xl animate-slideInLeft animation-delay-200">
                   AI Digest automatically collects, summarizes, and categorizes the latest developments in AI from GitHub, Hugging Face, and ArXiv, delivered in a digestible format.
                 </p>
                 
-                <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-fadeIn animation-delay-400">
+                <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-slideInBottom animation-delay-400">
                   <Link
                     to="/signup"
                     className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium rounded-full text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -203,25 +203,25 @@ function Landing() {
                 </div>
               </div>
               
-              {/* Trust indicators */}
-              <div className="mt-16 grid grid-cols-3 gap-4 animate-fadeIn animation-delay-600">
-                <div className="flex flex-col items-center">
-                  <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">500+</div>
+              {/* Trust indicators with staggered animations */}
+              <div className="mt-16 grid grid-cols-3 gap-4">
+                <div className="flex flex-col items-center animate-fadeIn animation-delay-600">
+                  <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 animate-pulse">500+</div>
                   <div className="text-sm text-gray-500 text-center">Daily Digests</div>
                 </div>
-                <div className="flex flex-col items-center">
-                  <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">50K+</div>
+                <div className="flex flex-col items-center animate-fadeIn animation-delay-700">
+                  <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 animate-pulse animation-delay-200">50K+</div>
                   <div className="text-sm text-gray-500 text-center">AI Researchers</div>
                 </div>
-                <div className="flex flex-col items-center">
-                  <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">3</div>
+                <div className="flex flex-col items-center animate-fadeIn animation-delay-800">
+                  <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 animate-pulse animation-delay-400">3</div>
                   <div className="text-sm text-gray-500 text-center">Top AI Sources</div>
                 </div>
               </div>
             </div>
             
-            {/* Creative 3D card showcase */}
-            <div className="lg:w-1/2 mt-12 lg:mt-0 px-4 sm:px-6 lg:px-8 perspective-1000">
+            {/* Creative 3D card showcase with improved animation */}
+            <div className="lg:w-1/2 mt-12 lg:mt-0 px-4 sm:px-6 lg:px-8 perspective-1000 animate-slideInRight animation-delay-300">
               <div className="relative w-full max-w-lg mx-auto animate-floatingCard">
                 {/* Decorative elements */}
                 <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-1000"></div>
@@ -532,52 +532,30 @@ function Landing() {
           </div>
           
           <div className="mt-20">
-            <div className="relative">
-              {/* Timeline line with animated pulse effect */}
-              <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-indigo-300 via-purple-300 to-indigo-300 rounded-full opacity-70">
-                <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-indigo-400 via-purple-400 to-indigo-400 animate-pulse rounded-full"></div>
-              </div>
-              
-              {/* Connecting dots with animated ping effect */}
-              <div className="hidden lg:block absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-1/2">
-                <div className="relative h-4 w-4 rounded-full bg-indigo-400">
-                  <div className="absolute inset-0 rounded-full bg-indigo-400 animate-ping opacity-75"></div>
-                </div>
-              </div>
-              <div className="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <div className="relative h-4 w-4 rounded-full bg-purple-400">
-                  <div className="absolute inset-0 rounded-full bg-purple-400 animate-ping opacity-75 animation-delay-700"></div>
-                </div>
-              </div>
-              <div className="hidden lg:block absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/2">
-                <div className="relative h-4 w-4 rounded-full bg-indigo-400">
-                  <div className="absolute inset-0 rounded-full bg-indigo-400 animate-ping opacity-75 animation-delay-1400"></div>
-                </div>
-              </div>
-              
+            <div className="relative">              
               {/* Steps */}
               <div className="space-y-24 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-12">
                 {/* Step 1 - Enhanced with better animations and effects */}
-                <div className="relative group lg:mt-16" data-aos="fade-up" data-aos-delay="0">
+                <div className="relative group lg:perspective-1000">
                   <div className="lg:flex lg:items-start lg:flex-col">
-                    <div className="flex-shrink-0 flex items-center justify-center h-24 w-24 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-xl group-hover:shadow-2xl transition-all duration-300 z-10 mx-auto mb-8 border-4 border-white lg:translate-y-[-1rem]">
+                    <div className="flex-shrink-0 flex items-center justify-center h-24 w-24 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-xl group-hover:shadow-2xl transition-all duration-300 z-10 mx-auto mb-8 border-4 border-white group-hover:border-indigo-100 lg:translate-y-[-1rem] animate-slideInTop">
                       <div className="flex flex-col items-center justify-center">
                         <span className="text-3xl font-bold leading-none">01</span>
                         <div className="w-12 h-0.5 bg-white/50 my-1"></div>
                         <span className="text-xs font-medium uppercase tracking-wider">Collect</span>
                       </div>
                     </div>
-                    <div className="bg-white rounded-xl p-8 shadow-xl group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-1 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-indigo-50 border border-gray-100 relative z-20">
+                    <div className="bg-white rounded-xl p-8 shadow-xl group-hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-1 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-indigo-50 border border-gray-100 relative z-20 lg:group-hover:rotate-y-3 animate-slideInRight">
                       <h3 className="text-2xl leading-6 font-bold text-gray-900 mb-4 text-center flex flex-col items-center">
                         <span>Data Collection</span>
                         <div className="w-12 h-1 bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-full mt-3"></div>
                       </h3>
                       <p className="text-base text-gray-500 text-center mb-6">
-                        Our intelligent crawlers continuously scan GitHub, Hugging Face, and ArXiv to identify and collect the latest AI repositories, models, and research papers as they're published.
+                        Our intelligent crawlers continuously scan GitHub, Hugging Face, and ArXiv to identify and collect the latest AI repositories, models, and research papers as they're published. Using advanced filters and relevance algorithms, we prioritize high-quality content from reputable sources.
                       </p>
                       <div className="flex justify-center">
-                        <div className="flex space-x-2 items-center p-3 bg-indigo-50 rounded-lg text-indigo-700 text-sm">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <div className="flex space-x-2 items-center p-3 bg-indigo-50 rounded-lg text-indigo-700 text-sm group-hover:bg-indigo-100 group-hover:shadow-md transition-all duration-300">
+                          <svg className="w-5 h-5 group-hover:animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
                           <span>Updated multiple times daily</span>
@@ -588,16 +566,16 @@ function Landing() {
                 </div>
                 
                 {/* Step 2 - Enhanced with better animations and effects */}
-                <div className="relative group" data-aos="fade-up" data-aos-delay="200">
+                <div className="relative group lg:perspective-1000">
                   <div className="lg:flex lg:items-start lg:flex-col">
-                    <div className="flex-shrink-0 flex items-center justify-center h-24 w-24 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 text-white shadow-xl group-hover:shadow-2xl transition-all duration-300 z-10 mx-auto mb-8 border-4 border-white">
-                      <div className="flex flex-col items-center justify-center">
+                    <div className="flex-shrink-0 flex items-center justify-center h-24 w-24 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 text-white shadow-xl group-hover:shadow-2xl transition-all duration-300 z-10 mx-auto mb-8 border-4 border-white group-hover:border-purple-100 animate-slideInTop animation-delay-400">
+                      <div className="flex flex-col items-center justify-center relative">
                         <span className="text-3xl font-bold leading-none">02</span>
                         <div className="w-12 h-0.5 bg-white/50 my-1"></div>
                         <span className="text-xs font-medium uppercase tracking-wider">Process</span>
                       </div>
                     </div>
-                    <div className="bg-white rounded-xl p-8 shadow-xl group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-1 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-purple-50 border border-gray-100 relative z-20">
+                    <div className="bg-white rounded-xl p-8 shadow-xl group-hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-1 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-purple-50 border border-gray-100 relative z-20 lg:group-hover:rotate-y-3 animate-slideInLeft animation-delay-300">
                       <h3 className="text-2xl leading-6 font-bold text-gray-900 mb-4 text-center flex flex-col items-center">
                         <span>AI Processing</span>
                         <div className="w-12 h-1 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full mt-3"></div>
@@ -605,9 +583,22 @@ function Landing() {
                       <p className="text-base text-gray-500 text-center mb-6">
                         State-of-the-art language models analyze and process the collected content, generating concise summaries, extracting key insights, and automatically assigning relevant categories and tags.
                       </p>
+                      
+                      {/* Processing stats with animated counter effect */}
+                      <div className="grid grid-cols-2 gap-4 mb-6">
+                        <div className="text-center">
+                          <div className="text-xl font-bold text-purple-600 group-hover:animate-counter" data-value="98">98%</div>
+                          <div className="text-xs text-gray-500">Accuracy</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xl font-bold text-purple-600 group-hover:animate-counter" data-value="5">5min</div>
+                          <div className="text-xs text-gray-500">Processing time</div>
+                        </div>
+                      </div>
+                      
                       <div className="flex justify-center">
-                        <div className="flex space-x-2 items-center p-3 bg-purple-50 rounded-lg text-purple-700 text-sm">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <div className="flex space-x-2 items-center p-3 bg-purple-50 rounded-lg text-purple-700 text-sm group-hover:bg-purple-100 group-hover:shadow-md transition-all duration-300">
+                          <svg className="w-5 h-5 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                           </svg>
                           <span>Powered by advanced AI models</span>
@@ -618,16 +609,16 @@ function Landing() {
                 </div>
                 
                 {/* Step 3 - Enhanced with better animations and effects */}
-                <div className="relative group lg:mt-32" data-aos="fade-up" data-aos-delay="400">
+                <div className="relative group lg:mt-32 lg:perspective-1000">
                   <div className="lg:flex lg:items-start lg:flex-col">
-                    <div className="flex-shrink-0 flex items-center justify-center h-24 w-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-700 text-white shadow-xl group-hover:shadow-2xl transition-all duration-300 z-10 mx-auto mb-8 border-4 border-white lg:translate-y-[-1rem]">
+                    <div className="flex-shrink-0 flex items-center justify-center h-24 w-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-700 text-white shadow-xl group-hover:shadow-2xl transition-all duration-300 z-10 mx-auto mb-8 border-4 border-white group-hover:border-indigo-100 lg:translate-y-[-1rem] animate-slideInTop animation-delay-800">
                       <div className="flex flex-col items-center justify-center">
                         <span className="text-3xl font-bold leading-none">03</span>
                         <div className="w-12 h-0.5 bg-white/50 my-1"></div>
                         <span className="text-xs font-medium uppercase tracking-wider">Deliver</span>
                       </div>
                     </div>
-                    <div className="bg-white rounded-xl p-8 shadow-xl group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-1 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-indigo-50 border border-gray-100 relative z-20">
+                    <div className="bg-white rounded-xl p-8 shadow-xl group-hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-1 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-indigo-50 border border-gray-100 relative z-20 lg:group-hover:rotate-y-3 animate-slideInRight animation-delay-600">
                       <h3 className="text-2xl leading-6 font-bold text-gray-900 mb-4 text-center flex flex-col items-center">
                         <span>Personalized Delivery</span>
                         <div className="w-12 h-1 bg-gradient-to-r from-indigo-400 to-purple-600 rounded-full mt-3"></div>
@@ -635,9 +626,18 @@ function Landing() {
                       <p className="text-base text-gray-500 text-center mb-6">
                         Our intelligent recommendation system delivers a personalized feed of AI digests tailored to your interests, ensuring you only see content that's relevant to your specific areas of focus.
                       </p>
+                      
+                      {/* Interactive interests display */}
+                      <div className="flex flex-wrap justify-center gap-2 mb-6">
+                        <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium group-hover:bg-blue-200 transition-colors">LLM</span>
+                        <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium group-hover:bg-green-200 transition-colors">Computer Vision</span>
+                        <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium group-hover:bg-red-200 transition-colors">Research</span>
+                        <span className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium group-hover:bg-yellow-200 transition-colors">Tools</span>
+                      </div>
+                      
                       <div className="flex justify-center">
-                        <div className="flex space-x-2 items-center p-3 bg-indigo-50 rounded-lg text-indigo-700 text-sm">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <div className="flex space-x-2 items-center p-3 bg-indigo-50 rounded-lg text-indigo-700 text-sm group-hover:bg-indigo-100 group-hover:shadow-md transition-all duration-300">
+                          <svg className="w-5 h-5 group-hover:text-yellow-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                           </svg>
                           <span>Customized to your preferences</span>
@@ -648,43 +648,27 @@ function Landing() {
                 </div>
               </div>
             </div>
-            
-            {/* Statistics section */}
-            <div className="mt-24 bg-white/50 backdrop-filter backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-white animate-fadeIn animation-delay-800">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div className="flex flex-col items-center text-center">
-                  <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">24/7</div>
-                  <div className="mt-2 text-sm text-gray-500">Continuous collection</div>
-                </div>
-                <div className="flex flex-col items-center text-center">
-                  <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">3.2M+</div>
-                  <div className="mt-2 text-sm text-gray-500">Papers processed</div>
-                </div>
-                <div className="flex flex-col items-center text-center">
-                  <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">98%</div>
-                  <div className="mt-2 text-sm text-gray-500">Categorization accuracy</div>
-                </div>
-                <div className="flex flex-col items-center text-center">
-                  <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">5 min</div>
-                  <div className="mt-2 text-sm text-gray-500">Average processing time</div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
       
-      {/* CTA Section */}
-      <div className="relative overflow-hidden">
+      {/* CTA Section - Enhanced with better animations and visual effects */}
+      <div className="relative overflow-hidden py-16 sm:py-24">
         {/* Background with gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-700 via-purple-700 to-indigo-900"></div>
         
+        {/* Animated glow effect */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-30 animate-pulse-slow animation-delay-2000"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-30 animate-pulse-slow"></div>
+        </div>
+        
         {/* Animated background particles */}
         <div className="absolute inset-0">
-          {Array.from({ length: 20 }).map((_, i) => (
+          {Array.from({ length: 30 }).map((_, i) => (
             <div 
               key={i}
-              className="absolute rounded-full bg-white opacity-10"
+              className="absolute rounded-full bg-white opacity-10 animate-floating"
               style={{
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
@@ -697,47 +681,218 @@ function Landing() {
           ))}
         </div>
         
-        {/* Background decorations */}
-        <div className="absolute top-0 left-0 -rotate-12 transform -translate-x-1/4 -translate-y-1/4">
-          <div className="w-80 h-80 bg-white opacity-5 rounded-full"></div>
+        {/* Background decorations with improved visual effects */}
+        <div className="absolute top-0 left-0 -rotate-12 transform -translate-x-1/4 -translate-y-1/4 animate-rotate-slow">
+          <div className="w-96 h-96 bg-white opacity-5 rounded-full border border-white/10"></div>
         </div>
-        <div className="absolute bottom-0 right-0 rotate-12 transform translate-x-1/4 translate-y-1/4">
-          <div className="w-80 h-80 bg-white opacity-5 rounded-full"></div>
+        <div className="absolute bottom-0 right-0 rotate-12 transform translate-x-1/4 translate-y-1/4 animate-rotate-slow animation-direction-reverse">
+          <div className="w-96 h-96 bg-white opacity-5 rounded-full border border-white/10"></div>
         </div>
         
-        <div className="relative max-w-2xl mx-auto text-center py-20 px-4 sm:py-28 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-white sm:text-4xl animate-fadeIn">
+        {/* Mesh gradient overlay for texture */}
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.15]"></div>
+        
+        <div className="relative max-w-2xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <div className="animate-bounce-subtle">
+            <div className="inline-block p-1 bg-white/10 rounded-full backdrop-blur-sm mb-6">
+              <div className="px-4 py-1 rounded-full text-white text-sm font-medium flex items-center gap-2">
+                <span className="flex h-2 w-2">
+                  <span className="animate-ping absolute h-2 w-2 rounded-full bg-white opacity-75"></span>
+                  <span className="relative rounded-full h-2 w-2 bg-white"></span>
+                </span>
+                <span>Join 50,000+ AI researchers and developers</span>
+              </div>
+            </div>
+          </div>
+          
+          <h2 className="text-3xl font-extrabold text-white sm:text-4xl animate-glow">
             <span className="block">Ready to stay ahead in AI?</span>
-            <span className="block mt-2">Start using AI Digest today.</span>
+            <span className="block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-200 to-indigo-100 animate-gradient-x">
+              Start using AI Digest today.
+            </span>
           </h2>
-          <p className="mt-6 text-lg leading-7 text-indigo-100 animate-fadeIn animation-delay-200">
-            Join the community of AI practitioners who rely on our digest to stay informed.
+          
+          <p className="mt-6 text-xl leading-7 text-indigo-100 animate-fadeIn animation-delay-200">
+            Join the community of AI practitioners who rely on our digest to stay informed about the latest breakthroughs.
           </p>
-          <div className="mt-10 animate-fadeIn animation-delay-400">
+          
+          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4 animate-fadeIn animation-delay-400">
             <Link
               to="/signup"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-indigo-700 bg-white hover:bg-indigo-50 transition-all duration-300 shadow-md hover:shadow-xl transform hover:-translate-y-1 hover:scale-105"
+              className="relative inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-full text-indigo-700 bg-white hover:bg-indigo-50 transition-all duration-300 shadow-md hover:shadow-xl transform hover:-translate-y-1 hover:scale-105 group"
             >
-              Sign up for free
+              <span className="absolute -inset-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full blur opacity-0 group-hover:opacity-30 transition-opacity"></span>
+              <span className="relative flex items-center">
+                Sign up for free
+                <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
+                </svg>
+              </span>
             </Link>
+            
+            <a
+              href="#features"
+              className="inline-flex items-center justify-center px-8 py-4 border border-white/30 text-base font-medium rounded-full text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300 hover:border-white/50"
+            >
+              Learn more
+            </a>
+          </div>
+          
+          {/* Trust markers */}
+          <div className="mt-12 flex flex-wrap justify-center gap-x-12 gap-y-6 animate-fadeIn animation-delay-600">
+            <div className="flex items-center text-white/80">
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <span className="text-sm">Secure login</span>
+            </div>
+            <div className="flex items-center text-white/80">
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-sm">Updated daily</span>
+            </div>
+            <div className="flex items-center text-white/80">
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+              </svg>
+              <span className="text-sm">Satisfaction guaranteed</span>
+            </div>
           </div>
         </div>
       </div>
       
       {/* Footer */}
       <footer className="bg-white">
-        <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
-          <div className="flex justify-center">
-            <div className="flex items-center space-x-2">
-              <SparklesIcon className="h-6 w-6 text-indigo-500" />
-              <span className="font-bold text-lg text-indigo-700">AI Digest</span>
-            </div>
-          </div>
-          <p className="mt-8 text-center text-sm text-gray-500">
+        <div className="max-w-7xl mx-auto py-4 px-4 overflow-hidden sm:px-6 lg:px-8">
+          <p className="text-center text-sm text-gray-500">
             &copy; {new Date().getFullYear()} AI Digest. All rights reserved.
           </p>
         </div>
       </footer>
+      
+      {/* Add additional animation keyframes for new effects */}
+      <style jsx>{`
+        @keyframes slideInTop {
+          from { opacity: 0; transform: translateY(-30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInRight {
+          from { opacity: 0; transform: translateX(30px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInLeft {
+          from { opacity: 0; transform: translateX(-30px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInBottom {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes gradientFlow {
+          0% { background-position: 0% 0%; }
+          100% { background-position: 0% 100%; }
+        }
+        
+        .animate-slideInTop {
+          animation: slideInTop 1s ease-out forwards;
+        }
+        
+        .animate-slideInRight {
+          animation: slideInRight 1s ease-out forwards;
+        }
+        
+        .animate-slideInLeft {
+          animation: slideInLeft 1s ease-out forwards;
+        }
+        
+        .animate-slideInBottom {
+          animation: slideInBottom 1s ease-out forwards;
+        }
+        
+        .animate-gradientFlow {
+          background-size: 100% 200%;
+          animation: gradientFlow 3s linear infinite;
+        }
+        
+        .lg\:group-hover\:rotate-y-3:hover {
+          transform: rotateY(3deg);
+        }
+        
+        .lg\:perspective-1000 {
+          perspective: 1000px;
+        }
+        
+        .animation-delay-300 {
+          animation-delay: 0.3s;
+        }
+        
+        .animation-delay-400 {
+          animation-delay: 0.4s;
+        }
+        
+        .animation-delay-500 {
+          animation-delay: 0.5s;
+        }
+        
+        .animation-delay-800 {
+          animation-delay: 0.8s;
+        }
+        
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.5; }
+        }
+        
+        @keyframes floating {
+          0% { transform: translate(0, 0); }
+          50% { transform: translate(10px, -10px); }
+          100% { transform: translate(0, 0); }
+        }
+        
+        @keyframes rotate-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        
+        @keyframes bounce-subtle {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes glow {
+          0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+          50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+        }
+        
+        .animate-pulse-slow {
+          animation: pulse-slow 4s ease-in-out infinite;
+        }
+        
+        .animate-floating {
+          animation: floating 8s ease-in-out infinite;
+        }
+        
+        .animate-rotate-slow {
+          animation: rotate-slow 40s linear infinite;
+        }
+        
+        .animate-bounce-subtle {
+          animation: bounce-subtle 5s ease-in-out infinite;
+        }
+        
+        .animate-glow {
+          animation: glow 3s ease-in-out infinite;
+        }
+        
+        .animation-direction-reverse {
+          animation-direction: reverse;
+        }
+      `}</style>
     </div>
   );
 }

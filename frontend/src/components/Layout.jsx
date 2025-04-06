@@ -1,23 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
-import Sidebar from './Sidebar';
-import { useState } from 'react';
 
 function Layout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
-      
-      <div className="flex">
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        
-        <main className="flex-1 p-4 md:p-6 md:ml-64">
-          <div className="max-w-7xl mx-auto">
-            <Outlet />
-          </div>
-        </main>
+    <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-white to-white">
+      <Navbar />
+      <div className="pt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Outlet />
       </div>
     </div>
   );
