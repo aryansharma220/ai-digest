@@ -28,11 +28,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
-  dbName: 'ai_discovery_digest',
+  dbName: 'aidigest',
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-  .then(() => console.log('Connected to MongoDB - ai_discovery_digest'))
+  .then(() => console.log('Connected to MongoDB - aidigest'))
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes

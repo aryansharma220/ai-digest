@@ -4,6 +4,7 @@ from pymongo import MongoClient, DESCENDING
 from pymongo.database import Database
 from pymongo.errors import PyMongoError
 import logging
+import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -17,24 +18,38 @@ class DigestStorage:
         Args:
             db_connection: MongoDB database connection
         """
-        if isinstance(db_connection, str):
-            self.client = MongoClient(db_connection)
-            self.db = self.client.ai_discovery_digest
-        else:
-            self.db = db_connection
-            
-        # Create collection for digests
-        self.digests = self.db.digests
-        
-        # Create indexes for efficient querying
         try:
-            self.digests.create_index([("date_created", DESCENDING)])
-            self.digests.create_index([("category", 1)])
-            self.digests.create_index([("source", 1)])
-            self.digests.create_index([("content_id", 1)], unique=True)
-            logger.info("Digest storage initialized with indexes")
+            if isinstance(db_connection, str):
+                logger.info(f"Connecting to MongoDB using connection string")
+                self.client = MongoClient(db_connection)
+                # Use environment variable for DB name
+                self.db_name = os.getenv('DB_NAME', 'aidigest')
+                self.db = self.client[self.db_name]
+                logger.info(f"Connected to database: {self.db_name}")
+            else:
+                logger.info("Using provided database connection")
+                self.db = db_connection
+                
+            # Create collection for digests
+            self.digests = self.db.digests
+            logger.info(f"Using collection: digests")
+            
+            # Create indexes for efficient querying
+            try:
+                self.digests.create_index([("date_created", DESCENDING)])
+                self.digests.create_index([("category", 1)])
+                self.digests.create_index([("source", 1)])
+                self.digests.create_index([("content_id", 1)], unique=True)
+                
+                # Test the connection
+                count = self.digests.count_documents({})
+                logger.info(f"Digest storage initialized with indexes. Document count: {count}")
+                
+            except Exception as e:
+                logger.error(f"Error creating indexes: {str(e)}")
         except Exception as e:
-            logger.error(f"Error creating indexes: {str(e)}")
+            logger.error(f"Error initializing DigestStorage: {str(e)}")
+            raise
     
     def store_digest(self, digest_data: Dict[str, Any]) -> Optional[str]:
         """

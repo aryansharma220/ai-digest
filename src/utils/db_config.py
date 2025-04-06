@@ -22,39 +22,51 @@ class DatabaseConfig:
         if not hasattr(self, 'initialized'):
             load_dotenv()
             self.initialized = True
+            # Get connection string from environment
             self.mongo_uri = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
-            self.db_name = os.getenv('DB_NAME', 'ai_discovery')
+            # Ensure we use the correct database name from environment
+            self.db_name = os.getenv('DB_NAME', 'aidigest')
+            # Log the database connection details for debugging
+            logger.info(f"Initializing database connection to: {self.db_name}")
+            logger.info(f"Using MongoDB URI: {self.mongo_uri[:20]}...") # Log partial URI for security
             self.connect()
 
     def connect(self) -> None:
         """Establish connection to MongoDB."""
         try:
-            if self._client is None:  # Changed from 'if not self._client'
+            if self._client is None:
+                # Configure MongoDB client with appropriate options for Atlas
                 self._client = MongoClient(
                     self.mongo_uri,
-                    serverSelectionTimeoutMS=5000,
-                    connectTimeoutMS=5000,
-                    maxPoolSize=50
+                    serverSelectionTimeoutMS=10000,  # Increased timeout for Atlas connection
+                    connectTimeoutMS=10000,
+                    maxPoolSize=50,
+                    retryWrites=True,
+                    w='majority'  # Ensure write acknowledgment
                 )
                 self._db = self._client[self.db_name]
                 # Test connection
                 self._client.server_info()
-                logger.info(f"Successfully connected to MongoDB: {self.db_name}")
+                logger.info(f"Successfully connected to MongoDB Atlas: {self.db_name}")
+                # Log database collections for debugging
+                collections = self._db.list_collection_names()
+                logger.info(f"Available collections: {collections}")
         except (PyMongoError, ServerSelectionTimeoutError) as e:
-            logger.error(f"Failed to connect to MongoDB: {str(e)}")
+            logger.error(f"Failed to connect to MongoDB Atlas: {str(e)}")
+            logger.error(f"Connection string (partial): {self.mongo_uri[:20]}...")
             raise
 
     @property
     def db(self) -> Database:
         """Get database instance."""
-        if self._db is None:  # Changed from 'if not self._db'
+        if self._db is None:
             self.connect()
         return self._db
 
     @property
     def client(self) -> MongoClient:
         """Get MongoDB client instance."""
-        if self._client is None:  # Changed from 'if not self._client'
+        if self._client is None:
             self.connect()
         return self._client
 

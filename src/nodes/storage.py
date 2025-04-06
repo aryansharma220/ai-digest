@@ -3,6 +3,11 @@ from datetime import datetime, timezone
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 from dataclasses import dataclass
+import logging
+import os
+
+# Add logger for better debugging
+logger = logging.getLogger(__name__)
 
 @dataclass
 class Summary:
@@ -17,12 +22,33 @@ class Summary:
 
 class Storage:
     def __init__(self, db_connection):
-        if isinstance(db_connection, str):
-            self.client = MongoClient(db_connection)
-            self.db = self.client.ai_discovery
-        else:
-            self.db = db_connection
-        self.summaries = self.db.summaries
+        try:
+            if isinstance(db_connection, str):
+                logger.info(f"Connecting to MongoDB using connection string")
+                self.client = MongoClient(db_connection)
+                # Use environment variable for DB name instead of hardcoding
+                db_name = os.getenv('DB_NAME', 'aidigest')
+                self.db = self.client[db_name]
+                logger.info(f"Connected to database: {db_name}")
+            else:
+                logger.info("Using provided database connection")
+                self.db = db_connection
+                
+            self.summaries = self.db.summaries
+            logger.info(f"Using collection: summaries")
+            
+            # Create index for better performance
+            self.create_index("date_created")
+            self.create_index("source")
+            self.create_index("category")
+            
+            # Test the connection by performing a simple operation
+            count = self.summaries.count_documents({})
+            logger.info(f"Connected to summaries collection. Document count: {count}")
+            
+        except Exception as e:
+            logger.error(f"Error initializing Storage: {str(e)}")
+            raise
 
     def store_summary(self, summary_data: Dict[str, Any]) -> str:
         """Store a new summary in the database."""
