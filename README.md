@@ -157,6 +157,8 @@ python main.py
 
 ### User Dashboard
 ![image](https://github.com/user-attachments/assets/cc181759-49ab-49a4-972a-467523cb66fe)
+![image](https://github.com/user-attachments/assets/8a5a1a21-4688-4d49-bb29-50d48db73a61)
+
 
 
 ### Digest Detail View
