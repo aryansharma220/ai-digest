@@ -3,11 +3,13 @@ import { CalendarIcon, TagIcon, ArrowTopRightOnSquareIcon, BookmarkIcon } from '
 import { BookmarkIcon as BookmarkSolidIcon } from '@heroicons/react/24/solid';
 import { formatDistanceToNow } from 'date-fns';
 import { useState } from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 
 function DigestCard({ digest }) {
   const { _id, title, summary, category, source, tags, date_created, url } = digest;
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const { darkMode } = useTheme();
   
   // Format date
   const formattedDate = date_created 
@@ -63,7 +65,11 @@ function DigestCard({ digest }) {
   
   return (
     <div 
-      className={`bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full transform ${isHovered ? 'scale-[1.02]' : 'scale-100'}`}
+      className={`rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full transform ${
+        darkMode 
+          ? 'bg-gray-800 border border-gray-700' 
+          : 'bg-white shadow-md'
+      } ${isHovered ? 'scale-[1.02]' : 'scale-100'}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -95,12 +101,16 @@ function DigestCard({ digest }) {
         </div>
         
         <Link to={`/digest/${_id}`} className="group">
-          <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
+          <h3 className={`text-lg font-semibold mb-3 group-hover:text-indigo-600 transition-colors ${
+            darkMode ? 'text-gray-100' : 'text-gray-900'
+          }`}>
             {title}
           </h3>
         </Link>
         
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
+        <p className={`text-sm mb-4 line-clamp-3 flex-grow ${
+          darkMode ? 'text-gray-300' : 'text-gray-600'
+        }`}>
           {summary}
         </p>
         
@@ -108,19 +118,25 @@ function DigestCard({ digest }) {
         {tags && tags.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-3">
             {tags.slice(0, 3).map(tag => (
-              <span key={tag} className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700">
+              <span key={tag} className={`text-xs px-2 py-1 rounded-full ${
+                darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-700'
+              }`}>
                 #{tag}
               </span>
             ))}
             {tags.length > 3 && (
-              <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700">
+              <span className={`text-xs px-2 py-1 rounded-full ${
+                darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-700'
+              }`}>
                 +{tags.length - 3}
               </span>
             )}
           </div>
         )}
         
-        <div className="flex items-center justify-between text-gray-500 text-xs mt-auto">
+        <div className={`flex items-center justify-between text-xs mt-auto ${
+          darkMode ? 'text-gray-400' : 'text-gray-500'
+        }`}>
           <div className="flex items-center">
             <CalendarIcon className="h-4 w-4 mr-1" />
             {formattedDate}
@@ -129,7 +145,11 @@ function DigestCard({ digest }) {
       </div>
       
       {/* Card footer with actions */}
-      <div className="p-4 bg-gray-50 border-t border-gray-100 flex justify-between items-center rounded-b-xl">
+      <div className={`p-4 border-t flex justify-between items-center rounded-b-xl ${
+        darkMode 
+          ? 'bg-gray-900 border-gray-700' 
+          : 'bg-gray-50 border-gray-100'
+      }`}>
         <Link
           to={`/digest/${_id}`}
           className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full text-sm font-medium transition-colors shadow-sm hover:shadow"
@@ -142,10 +162,14 @@ function DigestCard({ digest }) {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 bg-gray-200 hover:bg-gray-300 rounded-full transition-colors"
+            className={`p-2 rounded-full transition-colors ${
+              darkMode 
+                ? 'bg-gray-800 hover:bg-gray-700 text-gray-300' 
+                : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+            }`}
             title="Visit original source"
           >
-            <ArrowTopRightOnSquareIcon className="h-4 w-4 text-gray-700" />
+            <ArrowTopRightOnSquareIcon className="h-4 w-4" />
           </a>
         )}
       </div>

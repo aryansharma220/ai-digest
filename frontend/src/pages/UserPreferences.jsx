@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { fetchUserProfile, updateUserPreferences, fetchCategories } from '../services/api';
 import toast from 'react-hot-toast';
 import { CheckIcon, AdjustmentsHorizontalIcon, BellIcon, ClockIcon, TagIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
@@ -27,6 +28,7 @@ function CustomSwitch({ checked, onChange }) {
 
 function UserPreferences() {
   const { userToken } = useAuth();
+  const { darkMode } = useTheme();
   
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -112,17 +114,25 @@ function UserPreferences() {
     return (
       <div className="flex flex-col justify-center items-center h-64">
         <div className="relative w-20 h-20">
-          <div className="absolute top-0 left-0 w-full h-full border-4 border-indigo-100 rounded-full"></div>
-          <div className="absolute top-0 left-0 w-full h-full border-t-4 border-l-4 border-indigo-600 rounded-full animate-spin"></div>
+          <div className={`absolute top-0 left-0 w-full h-full border-4 rounded-full ${
+            darkMode ? 'border-gray-700' : 'border-indigo-100'
+          }`}></div>
+          <div className={`absolute top-0 left-0 w-full h-full border-t-4 border-l-4 rounded-full animate-spin ${
+            darkMode ? 'border-indigo-400' : 'border-indigo-600'
+          }`}></div>
         </div>
-        <p className="mt-6 text-indigo-600 font-medium animate-pulse">Loading your preferences...</p>
+        <p className={`mt-6 font-medium animate-pulse ${
+          darkMode ? 'text-indigo-400' : 'text-indigo-600'
+        }`}>Loading your preferences...</p>
       </div>
     );
   }
   
   if (error) {
     return (
-      <div className="bg-red-50 p-6 rounded-xl border border-red-200 shadow-md">
+      <div className={`p-6 rounded-xl shadow-md ${
+        darkMode ? 'bg-red-900/30 border border-red-800' : 'bg-red-50 border border-red-200'
+      }`}>
         <div className="flex items-start">
           <div className="flex-shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -145,10 +155,16 @@ function UserPreferences() {
   }
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-white to-white relative overflow-hidden pb-12">
-      <div className="absolute top-20 -right-40 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-3000"></div>
-      <div className="absolute bottom-20 -left-40 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-1000"></div>
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.07]"></div>
+    <div className={`min-h-screen relative overflow-hidden pb-12 ${
+      darkMode ? 'bg-gray-900' : 'bg-gradient-to-b from-indigo-50 via-white to-white'
+    }`}>
+      {!darkMode && (
+        <>
+          <div className="absolute top-20 -right-40 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-3000"></div>
+          <div className="absolute bottom-20 -left-40 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-1000"></div>
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.07]"></div>
+        </>
+      )}
       
       <div className="relative z-10 max-w-4xl mx-auto px-4 py-8">
         <div className="mb-8 animate-fadeIn">
@@ -157,26 +173,34 @@ function UserPreferences() {
               <AdjustmentsHorizontalIcon className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+              <h1 className={`text-3xl font-bold ${
+                darkMode ? 'text-white' : 'bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600'
+              }`}>
                 User Preferences
               </h1>
-              <p className="mt-1 text-gray-600">
+              <p className={`mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 Customize your AI digest experience and get personalized content
               </p>
             </div>
           </div>
           
           {profile && (
-            <div className="bg-white/70 backdrop-blur-sm shadow-sm rounded-xl p-4 border border-gray-100 flex items-center">
+            <div className={`shadow-sm rounded-xl p-4 border flex items-center ${
+              darkMode 
+                ? 'bg-gray-800/70 backdrop-blur-sm border-gray-700' 
+                : 'bg-white/70 backdrop-blur-sm border-gray-100'
+            }`}>
               <div className="h-10 w-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center text-white font-medium">
                 {profile.name?.[0] || profile.email?.[0] || 'U'}
               </div>
               <div className="ml-3">
-                <p className="text-sm font-medium text-gray-900">{profile.name || 'User'}</p>
-                <p className="text-xs text-gray-500">{profile.email}</p>
+                <p className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>{profile.name || 'User'}</p>
+                <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{profile.email}</p>
               </div>
               <div className="ml-auto">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
+                  darkMode ? 'bg-indigo-900 text-indigo-400' : 'bg-indigo-100 text-indigo-800'
+                }`}>
                   {profile.preferences?.digestFrequency || 'Daily'} digest
                 </span>
               </div>
@@ -184,14 +208,18 @@ function UserPreferences() {
           )}
         </div>
         
-        <div className="bg-white/80 backdrop-filter backdrop-blur-sm shadow-xl rounded-2xl border border-gray-100 overflow-hidden animate-slideInUp">
-          <div className="flex border-b border-gray-200">
+        <div className={`shadow-xl rounded-2xl border overflow-hidden animate-slideInUp ${
+          darkMode 
+            ? 'bg-gray-800/80 backdrop-filter backdrop-blur-sm border-gray-700' 
+            : 'bg-white/80 backdrop-filter backdrop-blur-sm border-gray-100'
+        }`}>
+          <div className={`flex border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
             <button
               onClick={() => setActiveTab('categories')}
               className={`px-6 py-4 text-sm font-medium flex items-center ${
                 activeTab === 'categories' 
-                  ? 'text-indigo-600 border-b-2 border-indigo-600' 
-                  : 'text-gray-500 hover:text-gray-700 hover:border-b-2 hover:border-gray-300'
+                  ? `${darkMode ? 'text-indigo-400 border-b-2 border-indigo-400' : 'text-indigo-600 border-b-2 border-indigo-600'}` 
+                  : `${darkMode ? 'text-gray-400 hover:text-gray-300 hover:border-b-2 hover:border-gray-600' : 'text-gray-500 hover:text-gray-700 hover:border-b-2 hover:border-gray-300'}`
               }`}
             >
               <TagIcon className="h-5 w-5 mr-2" />
@@ -201,8 +229,8 @@ function UserPreferences() {
               onClick={() => setActiveTab('notifications')}
               className={`px-6 py-4 text-sm font-medium flex items-center ${
                 activeTab === 'notifications' 
-                  ? 'text-indigo-600 border-b-2 border-indigo-600' 
-                  : 'text-gray-500 hover:text-gray-700 hover:border-b-2 hover:border-gray-300'
+                  ? `${darkMode ? 'text-indigo-400 border-b-2 border-indigo-400' : 'text-indigo-600 border-b-2 border-indigo-600'}` 
+                  : `${darkMode ? 'text-gray-400 hover:text-gray-300 hover:border-b-2 hover:border-gray-600' : 'text-gray-500 hover:text-gray-700 hover:border-b-2 hover:border-gray-300'}`
               }`}
             >
               <BellIcon className="h-5 w-5 mr-2" />
@@ -212,8 +240,8 @@ function UserPreferences() {
               onClick={() => setActiveTab('frequency')}
               className={`px-6 py-4 text-sm font-medium flex items-center ${
                 activeTab === 'frequency' 
-                  ? 'text-indigo-600 border-b-2 border-indigo-600' 
-                  : 'text-gray-500 hover:text-gray-700 hover:border-b-2 hover:border-gray-300'
+                  ? `${darkMode ? 'text-indigo-400 border-b-2 border-indigo-400' : 'text-indigo-600 border-b-2 border-indigo-600'}` 
+                  : `${darkMode ? 'text-gray-400 hover:text-gray-300 hover:border-b-2 hover:border-gray-600' : 'text-gray-500 hover:text-gray-700 hover:border-b-2 hover:border-gray-300'}`
               }`}
             >
               <ClockIcon className="h-5 w-5 mr-2" />
@@ -225,11 +253,13 @@ function UserPreferences() {
             <div className="p-6">
               <div className={activeTab === 'categories' ? 'block' : 'hidden'}>
                 <div className="mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
-                    <TagIcon className="h-5 w-5 mr-2 text-indigo-600" />
+                  <h2 className={`text-lg font-semibold mb-2 flex items-center ${
+                    darkMode ? 'text-gray-200' : 'text-gray-900'
+                  }`}>
+                    <TagIcon className={`h-5 w-5 mr-2 ${darkMode ? 'text-indigo-400' : 'text-indigo-600'}`} />
                     Categories of Interest
                   </h2>
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className={`text-sm mb-4 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                     Select the categories you're interested in to personalize your digest.
                   </p>
                   
@@ -240,23 +270,25 @@ function UserPreferences() {
                         onClick={() => toggleCategory(category.category)}
                         className={`flex items-center p-3 rounded-lg border transition-all cursor-pointer ${
                           selectedCategories.includes(category.category)
-                            ? 'bg-indigo-50 border-indigo-200 shadow-sm'
-                            : 'bg-white border-gray-200 hover:bg-gray-50'
+                            ? `${darkMode ? 'bg-indigo-900/30 border-indigo-800 shadow-sm' : 'bg-indigo-50 border-indigo-200 shadow-sm'}`
+                            : `${darkMode ? 'bg-gray-800 border-gray-700 hover:bg-gray-700' : 'bg-white border-gray-200 hover:bg-gray-50'}`
                         }`}
                       >
                         <div className={`flex-shrink-0 h-5 w-5 rounded flex items-center justify-center mr-3 ${
                           selectedCategories.includes(category.category)
-                            ? 'bg-indigo-600 text-white'
-                            : 'border border-gray-300'
+                            ? `${darkMode ? 'bg-indigo-400 text-gray-900' : 'bg-indigo-600 text-white'}`
+                            : `${darkMode ? 'border border-gray-600' : 'border border-gray-300'}`
                         }`}>
                           {selectedCategories.includes(category.category) && (
                             <CheckIcon className="h-3 w-3" />
                           )}
                         </div>
                         <div className="flex-grow">
-                          <span className="text-sm font-medium">{category.category}</span>
+                          <span className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>{category.category}</span>
                         </div>
-                        <span className="bg-indigo-100 text-indigo-800 text-xs px-2 py-0.5 rounded-full">
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${
+                          darkMode ? 'bg-indigo-900 text-indigo-400' : 'bg-indigo-100 text-indigo-800'
+                        }`}>
                           {category.count}
                         </span>
                       </div>
@@ -267,19 +299,23 @@ function UserPreferences() {
               
               <div className={activeTab === 'notifications' ? 'block' : 'hidden'}>
                 <div className="mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
-                    <BellIcon className="h-5 w-5 mr-2 text-indigo-600" />
+                  <h2 className={`text-lg font-semibold mb-2 flex items-center ${
+                    darkMode ? 'text-gray-200' : 'text-gray-900'
+                  }`}>
+                    <BellIcon className={`h-5 w-5 mr-2 ${darkMode ? 'text-indigo-400' : 'text-indigo-600'}`} />
                     Notification Preferences
                   </h2>
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className={`text-sm mb-4 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                     Control how and when you want to receive notifications about new digests.
                   </p>
                   
                   <div className="space-y-4">
-                    <div className="bg-white rounded-lg border border-gray-200 p-4 flex items-center justify-between">
+                    <div className={`rounded-lg border p-4 flex items-center justify-between ${
+                      darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                    }`}>
                       <div>
-                        <h3 className="text-sm font-medium text-gray-900">Email Notifications</h3>
-                        <p className="text-xs text-gray-500">Receive digest updates in your inbox</p>
+                        <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>Email Notifications</h3>
+                        <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Receive digest updates in your inbox</p>
                       </div>
                       <CustomSwitch
                         checked={notificationsEnabled}
@@ -287,22 +323,30 @@ function UserPreferences() {
                       />
                     </div>
                     
-                    <div className="bg-white rounded-lg border border-gray-200 p-4 flex items-center justify-between opacity-50">
+                    <div className={`rounded-lg border p-4 flex items-center justify-between opacity-50 ${
+                      darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                    }`}>
                       <div>
-                        <h3 className="text-sm font-medium text-gray-900">Push Notifications</h3>
-                        <p className="text-xs text-gray-500">Receive alerts on your browser</p>
+                        <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>Push Notifications</h3>
+                        <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Receive alerts on your browser</p>
                       </div>
-                      <div className="px-2 py-1 text-xs bg-indigo-100 text-indigo-600 rounded-full">
+                      <div className={`px-2 py-1 text-xs rounded-full ${
+                        darkMode ? 'bg-indigo-900 text-indigo-400' : 'bg-indigo-100 text-indigo-600'
+                      }`}>
                         Coming soon
                       </div>
                     </div>
                     
-                    <div className="bg-white rounded-lg border border-gray-200 p-4 flex items-center justify-between opacity-50">
+                    <div className={`rounded-lg border p-4 flex items-center justify-between opacity-50 ${
+                      darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                    }`}>
                       <div>
-                        <h3 className="text-sm font-medium text-gray-900">SMS Notifications</h3>
-                        <p className="text-xs text-gray-500">Get text messages for important updates</p>
+                        <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>SMS Notifications</h3>
+                        <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get text messages for important updates</p>
                       </div>
-                      <div className="px-2 py-1 text-xs bg-indigo-100 text-indigo-600 rounded-full">
+                      <div className={`px-2 py-1 text-xs rounded-full ${
+                        darkMode ? 'bg-indigo-900 text-indigo-400' : 'bg-indigo-100 text-indigo-600'
+                      }`}>
                         Coming soon
                       </div>
                     </div>
@@ -312,11 +356,13 @@ function UserPreferences() {
               
               <div className={activeTab === 'frequency' ? 'block' : 'hidden'}>
                 <div className="mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
-                    <ClockIcon className="h-5 w-5 mr-2 text-indigo-600" />
+                  <h2 className={`text-lg font-semibold mb-2 flex items-center ${
+                    darkMode ? 'text-gray-200' : 'text-gray-900'
+                  }`}>
+                    <ClockIcon className={`h-5 w-5 mr-2 ${darkMode ? 'text-indigo-400' : 'text-indigo-600'}`} />
                     Digest Frequency
                   </h2>
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className={`text-sm mb-4 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                     Choose how often you want to receive your personalized AI digest.
                   </p>
                   
@@ -325,28 +371,28 @@ function UserPreferences() {
                       onClick={() => setDigestFrequency('daily')}
                       className={`relative rounded-lg border px-5 py-4 cursor-pointer transition-all ${
                         digestFrequency === 'daily'
-                          ? 'bg-indigo-50 border-indigo-200 shadow-sm'
-                          : 'bg-white border-gray-200 hover:bg-gray-50'
+                          ? `${darkMode ? 'bg-indigo-900/30 border-indigo-800 shadow-sm' : 'bg-indigo-50 border-indigo-200 shadow-sm'}`
+                          : `${darkMode ? 'bg-gray-800 border-gray-700 hover:bg-gray-700' : 'bg-white border-gray-200 hover:bg-gray-50'}`
                       }`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <div className={`flex-shrink-0 h-4 w-4 rounded-full border flex items-center justify-center ${
                             digestFrequency === 'daily'
-                              ? 'bg-indigo-600 border-transparent'
-                              : 'border-gray-300'
+                              ? `${darkMode ? 'bg-indigo-400 border-transparent' : 'bg-indigo-600 border-transparent'}`
+                              : `${darkMode ? 'border-gray-600' : 'border-gray-300'}`
                           }`}>
                             {digestFrequency === 'daily' && (
-                              <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
+                              <div className={`w-1.5 h-1.5 rounded-full ${darkMode ? 'bg-gray-900' : 'bg-white'}`}></div>
                             )}
                           </div>
                           <div className="ml-3">
-                            <h3 className="text-sm font-medium text-gray-900">Daily Digest</h3>
-                            <p className="text-xs text-gray-500">Receive updates every day</p>
+                            <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>Daily Digest</h3>
+                            <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Receive updates every day</p>
                           </div>
                         </div>
                         <ChevronRightIcon className={`h-5 w-5 ${
-                          digestFrequency === 'daily' ? 'text-indigo-600' : 'text-gray-400'
+                          digestFrequency === 'daily' ? `${darkMode ? 'text-indigo-400' : 'text-indigo-600'}` : `${darkMode ? 'text-gray-500' : 'text-gray-400'}`
                         }`} />
                       </div>
                     </div>
@@ -355,45 +401,51 @@ function UserPreferences() {
                       onClick={() => setDigestFrequency('weekly')}
                       className={`relative rounded-lg border px-5 py-4 cursor-pointer transition-all ${
                         digestFrequency === 'weekly'
-                          ? 'bg-indigo-50 border-indigo-200 shadow-sm'
-                          : 'bg-white border-gray-200 hover:bg-gray-50'
+                          ? `${darkMode ? 'bg-indigo-900/30 border-indigo-800 shadow-sm' : 'bg-indigo-50 border-indigo-200 shadow-sm'}`
+                          : `${darkMode ? 'bg-gray-800 border-gray-700 hover:bg-gray-700' : 'bg-white border-gray-200 hover:bg-gray-50'}`
                       }`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <div className={`flex-shrink-0 h-4 w-4 rounded-full border flex items-center justify-center ${
                             digestFrequency === 'weekly'
-                              ? 'bg-indigo-600 border-transparent'
-                              : 'border-gray-300'
+                              ? `${darkMode ? 'bg-indigo-400 border-transparent' : 'bg-indigo-600 border-transparent'}`
+                              : `${darkMode ? 'border-gray-600' : 'border-gray-300'}`
                           }`}>
                             {digestFrequency === 'weekly' && (
-                              <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
+                              <div className={`w-1.5 h-1.5 rounded-full ${darkMode ? 'bg-gray-900' : 'bg-white'}`}></div>
                             )}
                           </div>
                           <div className="ml-3">
-                            <h3 className="text-sm font-medium text-gray-900">Weekly Digest</h3>
-                            <p className="text-xs text-gray-500">Receive a summary once a week</p>
+                            <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>Weekly Digest</h3>
+                            <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Receive a summary once a week</p>
                           </div>
                         </div>
                         <ChevronRightIcon className={`h-5 w-5 ${
-                          digestFrequency === 'weekly' ? 'text-indigo-600' : 'text-gray-400'
+                          digestFrequency === 'weekly' ? `${darkMode ? 'text-indigo-400' : 'text-indigo-600'}` : `${darkMode ? 'text-gray-500' : 'text-gray-400'}`
                         }`} />
                       </div>
                     </div>
                     
                     <div
-                      className="relative rounded-lg border px-5 py-4 bg-gray-50 border-gray-200 opacity-60"
+                      className={`relative rounded-lg border px-5 py-4 opacity-60 ${
+                        darkMode ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'
+                      }`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <div className="flex-shrink-0 h-4 w-4 rounded-full border border-gray-300">
+                          <div className={`flex-shrink-0 h-4 w-4 rounded-full border ${
+                            darkMode ? 'border-gray-600' : 'border-gray-300'
+                          }`}>
                           </div>
                           <div className="ml-3">
-                            <h3 className="text-sm font-medium text-gray-900">Monthly Digest</h3>
-                            <p className="text-xs text-gray-500">Receive a monthly summary</p>
+                            <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>Monthly Digest</h3>
+                            <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Receive a monthly summary</p>
                           </div>
                         </div>
-                        <div className="px-2 py-1 text-xs bg-indigo-100 text-indigo-600 rounded-full">
+                        <div className={`px-2 py-1 text-xs rounded-full ${
+                          darkMode ? 'bg-indigo-900 text-indigo-400' : 'bg-indigo-100 text-indigo-600'
+                        }`}>
                           Coming soon
                         </div>
                       </div>
@@ -403,9 +455,13 @@ function UserPreferences() {
               </div>
             </div>
             
-            <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
+            <div className={`px-6 py-4 border-t flex justify-between items-center ${
+              darkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-50 border-gray-200'
+            }`}>
               <div className={`transition-all duration-300 ${saveSuccess ? 'opacity-100' : 'opacity-0'}`}>
-                <div className="flex items-center text-green-600">
+                <div className={`flex items-center ${
+                  darkMode ? 'text-green-400' : 'text-green-600'
+                }`}>
                   <CheckIcon className="h-5 w-5 mr-1" />
                   <span className="text-sm font-medium">Preferences saved!</span>
                 </div>
@@ -414,7 +470,9 @@ function UserPreferences() {
               <button
                 type="submit"
                 disabled={saving}
-                className="inline-flex justify-center items-center py-2.5 px-6 border border-transparent shadow-sm text-sm font-medium rounded-full text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-all duration-300 transform hover:-translate-y-0.5"
+                className={`inline-flex justify-center items-center py-2.5 px-6 border border-transparent shadow-sm text-sm font-medium rounded-full text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-all duration-300 transform hover:-translate-y-0.5 ${
+                  darkMode ? 'hover:from-indigo-500 hover:to-purple-500 focus:ring-indigo-400' : ''
+                }`}
               >
                 {saving ? (
                   <>
@@ -433,17 +491,29 @@ function UserPreferences() {
         </div>
         
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 animate-fadeIn animation-delay-300">
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm p-5 border border-gray-100">
-            <h3 className="text-sm font-medium text-gray-900 mb-2">About Personalized Digests</h3>
-            <p className="text-xs text-gray-500">
+          <div className={`rounded-xl shadow-sm p-5 border ${
+            darkMode 
+              ? 'bg-gray-800/80 backdrop-blur-sm border-gray-700' 
+              : 'bg-white/80 backdrop-blur-sm border-gray-100'
+          }`}>
+            <h3 className={`text-sm font-medium mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>
+              About Personalized Digests
+            </h3>
+            <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
               Our AI uses your category preferences to tailor content specifically to your interests.
               The more categories you select, the more diverse your digest will be.
             </p>
           </div>
           
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm p-5 border border-gray-100">
-            <h3 className="text-sm font-medium text-gray-900 mb-2">Digest Privacy</h3>
-            <p className="text-xs text-gray-500">
+          <div className={`rounded-xl shadow-sm p-5 border ${
+            darkMode 
+              ? 'bg-gray-800/80 backdrop-blur-sm border-gray-700' 
+              : 'bg-white/80 backdrop-blur-sm border-gray-100'
+          }`}>
+            <h3 className={`text-sm font-medium mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>
+              Digest Privacy
+            </h3>
+            <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
               Your preference data is only used to personalize your content. We never share your
               personal information with third parties.
             </p>

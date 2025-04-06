@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { fetchDigests, fetchPersonalizedDigests } from '../services/api';
 import DigestCard from '../components/DigestCard';
 import FilterBar from '../components/FilterBar';
@@ -10,6 +11,7 @@ import { SparklesIcon, RocketLaunchIcon, BookOpenIcon, MagnifyingGlassIcon, XMar
 function Dashboard() {
   const [searchParams] = useSearchParams();
   const { userToken } = useAuth();
+  const { darkMode } = useTheme();
   
   const [digests, setDigests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -107,14 +109,26 @@ function Dashboard() {
   };
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-white to-white relative overflow-hidden pb-12 pt-20">
-      <div className="absolute top-20 -right-40 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-3000"></div>
-      <div className="absolute bottom-20 -left-40 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-1000"></div>
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.07]"></div>
+    <div className={`min-h-screen relative pb-12 pt-24 ${
+      darkMode ? 'bg-gray-900' : 'bg-gradient-to-b from-indigo-50 via-white to-white'
+    }`}>
+      {/* Background decoration - conditionally rendered based on dark mode */}
+      {!darkMode && (
+        <>
+          <div className="absolute top-20 -right-40 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-3000"></div>
+          <div className="absolute bottom-20 -left-40 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-1000"></div>
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.07]"></div>
+        </>
+      )}
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-500 text-white p-8 rounded-2xl shadow-lg mb-8 transform transition-all duration-500 hover:shadow-xl animate-fadeIn">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        {/* Header section */}
+        <div className={`p-8 rounded-2xl shadow-lg mb-8 transform transition-all duration-500 hover:shadow-xl animate-fadeIn ${
+          darkMode
+            ? 'bg-gradient-to-r from-indigo-800 via-purple-800 to-indigo-900 text-white'
+            : 'bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-500 text-white'
+        }`}>
+          <div className="flex flex-col p-4 lg:flex-row lg:items-center lg:justify-between gap-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-white/20 backdrop-blur-sm rounded-full shadow-inner">
                 {viewMode === 'personalized' ? (
@@ -236,47 +250,65 @@ function Dashboard() {
           )}
         </div>
       
+        {/* Filter section */}
         <div className={`transition-all duration-300 ease-in-out overflow-hidden mb-8 ${
           isFilterVisible ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}>
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md p-5 border border-gray-100 transition-all duration-300 hover:shadow-lg animate-slideInUp">
-            <FilterBar />
+        } ${darkMode ? 'bg-gray-800 shadow-md rounded-xl border border-gray-700' : 'bg-white shadow-md rounded-xl'}`}>
+          <div className="p-5 transition-all duration-300 hover:shadow-lg animate-slideInUp">
+            <FilterBar darkMode={darkMode} />
           </div>
         </div>
       
+        {/* Loading state */}
         {loading ? (
           <div className="flex flex-col justify-center items-center h-64 mt-12 animate-fadeIn">
             <div className="relative w-20 h-20">
-              <div className="absolute top-0 left-0 w-full h-full border-4 border-indigo-100 rounded-full"></div>
-              <div className="absolute top-0 left-0 w-full h-full border-t-4 border-l-4 border-indigo-600 rounded-full animate-spin"></div>
+              <div className={`absolute top-0 left-0 w-full h-full border-4 rounded-full ${
+                darkMode ? 'border-gray-700' : 'border-indigo-100'
+              }`}></div>
+              <div className={`absolute top-0 left-0 w-full h-full border-t-4 border-l-4 rounded-full animate-spin ${
+                darkMode ? 'border-indigo-400' : 'border-indigo-600'
+              }`}></div>
             </div>
-            <p className="mt-6 text-indigo-600 font-medium animate-pulse">
+            <p className={`mt-6 font-medium animate-pulse ${
+              darkMode ? 'text-indigo-400' : 'text-indigo-600'
+            }`}>
               {refreshing ? 'Refreshing your digests...' : 'Loading your digests...'}
             </p>
           </div>
         ) : error ? (
-          <div className="bg-white p-6 rounded-xl border border-red-200 shadow-md mb-8 animate-fadeIn">
-            <h3 className="text-lg font-medium text-red-800 mb-2 flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className={`p-6 rounded-xl shadow-md mb-8 ${
+            darkMode ? 'bg-red-900/30 border border-red-800' : 'bg-red-50 border border-red-200'
+          } animate-fadeIn`}>
+            <h3 className={`text-lg font-medium mb-2 flex items-center ${
+              darkMode ? 'text-red-400' : 'text-red-800'
+            }`}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
               Error loading digests
             </h3>
-            <p className="text-red-700">{error}</p>
+            <p className={`${darkMode ? 'text-red-300' : 'text-red-700'}`}>{error}</p>
             <button 
               onClick={handleRefresh}
-              className="mt-4 px-6 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+              className={`mt-4 px-6 py-2 rounded-full transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
+                darkMode ? 'bg-gradient-to-r from-indigo-700 to-purple-800 text-white hover:from-indigo-800 hover:to-purple-900 focus:ring-indigo-400' : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700 focus:ring-indigo-500'
+              }`}
             >
               Try Again
             </button>
           </div>
         ) : filteredDigests.length === 0 ? (
-          <div className="bg-white p-10 rounded-xl border border-gray-200 shadow-md text-center animate-fadeIn">
-            <div className="bg-indigo-50 p-4 w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center">
-              <BookOpenIcon className="h-10 w-10 text-indigo-500" />
+          <div className={`p-10 rounded-xl shadow-md text-center ${
+            darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
+          } animate-fadeIn`}>
+            <div className={`p-4 w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center ${
+              darkMode ? 'bg-gray-700' : 'bg-indigo-50'
+            }`}>
+              <BookOpenIcon className={`h-10 w-10 ${darkMode ? 'text-indigo-400' : 'text-indigo-500'}`} />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">No digests found</h3>
-            <p className="text-gray-600 max-w-md mx-auto">
+            <h3 className={`text-xl font-bold mb-2 ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>No digests found</h3>
+            <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} max-w-md mx-auto`}>
               {searchQuery 
                 ? `We couldn't find any digests matching "${searchQuery}". Try a different search term.` 
                 : 'We couldn\'t find any digests matching your current filters. Try adjusting your filter criteria or check back later.'}
@@ -285,14 +317,18 @@ function Dashboard() {
               {searchQuery && (
                 <button 
                   onClick={() => setSearchQuery('')}
-                  className="px-6 py-2 bg-white border border-gray-300 text-gray-700 rounded-full hover:bg-gray-50 transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                  className={`px-6 py-2 rounded-full transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
+                    darkMode ? 'bg-gray-700 text-gray-300 hover:bg-gray-600 focus:ring-gray-500' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500'
+                  }`}
                 >
                   Clear Search
                 </button>
               )}
               <button 
                 onClick={handleReset}
-                className="px-6 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                className={`px-6 py-2 rounded-full transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
+                  darkMode ? 'bg-gradient-to-r from-indigo-700 to-purple-800 text-white hover:from-indigo-800 hover:to-purple-900 focus:ring-indigo-400' : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700 focus:ring-indigo-500'
+                }`}
               >
                 Reset Filters
               </button>
@@ -300,29 +336,35 @@ function Dashboard() {
           </div>
         ) : (
           <>
-            <div className="bg-white rounded-xl shadow-sm p-4 mb-6 border border-gray-100 flex flex-wrap justify-between items-center animate-fadeIn animation-delay-300">
-              <div className="text-sm text-gray-500 flex items-center">
-                <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-600 font-medium text-xs mr-2">
+            {/* Stats summary */}
+            <div className={`rounded-xl shadow-sm p-4 mb-6 flex flex-wrap justify-between items-center ${
+              darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-100'
+            } animate-fadeIn animation-delay-300`}>
+              <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <span className={`inline-flex items-center justify-center h-6 w-6 rounded-full text-xs mr-2 ${
+                  darkMode ? 'bg-indigo-900 text-indigo-300' : 'bg-indigo-100 text-indigo-600'
+                }`}>
                   {searchQuery ? filteredDigests.length : pagination.total}
                 </span>
                 <span>digests found</span>
-                {searchQuery && <span className="ml-2">for "<span className="font-medium text-indigo-600">{searchQuery}</span>"</span>}
+                {searchQuery && <span className="ml-2">for "<span className={`font-medium ${darkMode ? 'text-indigo-300' : 'text-indigo-600'}`}>{searchQuery}</span>"</span>}
               </div>
-              <div className="text-sm text-gray-500">
-                Showing <span className="font-medium text-indigo-600">
+              <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                Showing <span className={`font-medium ${darkMode ? 'text-indigo-300' : 'text-indigo-600'}`}>
                   {searchQuery 
                     ? Math.min(1, filteredDigests.length)
                     : Math.min(1 + (pagination.page - 1) * pagination.limit, pagination.total)}
-                </span> to <span className="font-medium text-indigo-600">
+                </span> to <span className={`font-medium ${darkMode ? 'text-indigo-300' : 'text-indigo-600'}`}>
                   {searchQuery 
                     ? filteredDigests.length
                     : Math.min(pagination.page * pagination.limit, pagination.total)}
-                </span> of <span className="font-medium text-indigo-600">
+                </span> of <span className={`font-medium ${darkMode ? 'text-indigo-300' : 'text-indigo-600'}`}>
                   {searchQuery ? filteredDigests.length : pagination.total}
                 </span>
               </div>
             </div>
             
+            {/* Pass dark mode prop to DigestCard components */}
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {(searchQuery ? filteredDigests : digests).map((digest, index) => (
                 <div 
@@ -330,7 +372,7 @@ function Dashboard() {
                   className="transform transition-all duration-300 hover:-translate-y-1 animate-fadeIn"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <DigestCard digest={digest} />
+                  <DigestCard digest={digest} darkMode={darkMode} />
                 </div>
               ))}
             </div>
@@ -343,6 +385,7 @@ function Dashboard() {
               currentPage={pagination.page}
               totalPages={pagination.pages}
               totalItems={pagination.total}
+              darkMode={darkMode}
             />
           </div>
         )}

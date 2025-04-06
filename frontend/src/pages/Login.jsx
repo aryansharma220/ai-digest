@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import toast from 'react-hot-toast';
 import { SparklesIcon } from '@heroicons/react/24/outline';
 
@@ -10,6 +11,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const { login, signInWithGoogle } = useAuth();
+  const { darkMode } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -44,12 +46,20 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen relative bg-gradient-to-b from-indigo-50 via-white to-white overflow-hidden py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
+    <div className={`min-h-screen relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center ${
+      darkMode 
+        ? 'bg-gray-900 text-gray-100' 
+        : 'bg-gradient-to-b from-indigo-50 via-white to-white'
+    }`}>
       {/* Back to Dashboard Button */}
       <div className="absolute top-4 left-4 z-10">
         <Link 
           to="/" 
-          className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium text-indigo-600 hover:text-indigo-500 shadow-sm hover:shadow transition-all group"
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium shadow-sm hover:shadow transition-all group ${
+            darkMode
+              ? 'bg-gray-800/80 backdrop-blur-sm text-gray-200 hover:bg-gray-700'
+              : 'bg-white/80 backdrop-blur-sm text-indigo-600 hover:text-indigo-500'
+          }`}
         >
           <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -58,41 +68,53 @@ function Login() {
         </Link>
       </div>
       
-      {/* Background decoration */}
-      <div className="absolute top-20 -right-20 w-96 h-96 bg-indigo-400 opacity-20 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-      <div className="absolute -bottom-20 left-40 w-96 h-96 bg-purple-400 opacity-20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+      {/* Background decoration - only visible in light mode */}
+      {!darkMode && (
+        <>
+          <div className="absolute top-20 -right-20 w-96 h-96 bg-indigo-400 opacity-20 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+          <div className="absolute -bottom-20 left-40 w-96 h-96 bg-purple-400 opacity-20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
 
-      {/* Floating particles background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div 
-            key={i}
-            className="absolute rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 backdrop-blur-sm animate-floatingSlow"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              width: `${Math.random() * 50 + 10}px`,
-              height: `${Math.random() * 50 + 10}px`,
-              animationDuration: `${Math.random() * 15 + 15}s`,
-              animationDelay: `${Math.random() * 5}s`,
-              transform: `rotate(${Math.random() * 360}deg)`,
-            }}
-          ></div>
-        ))}
-      </div>
+          {/* Floating particles background */}
+          <div className="absolute inset-0 overflow-hidden">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div 
+                key={i}
+                className="absolute rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 backdrop-blur-sm animate-floatingSlow"
+                style={{
+                  top: `${Math.random() * 100}%`,
+                  left: `${Math.random() * 100}%`,
+                  width: `${Math.random() * 50 + 10}px`,
+                  height: `${Math.random() * 50 + 10}px`,
+                  animationDuration: `${Math.random() * 15 + 15}s`,
+                  animationDelay: `${Math.random() * 5}s`,
+                  transform: `rotate(${Math.random() * 360}deg)`,
+                }}
+              ></div>
+            ))}
+          </div>
 
-      {/* Mesh gradient overlay for texture */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.15]"></div>
+          {/* Mesh gradient overlay for texture */}
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.15]"></div>
+        </>
+      )}
 
       <div className="relative max-w-md w-full animate-fadeIn">
         {/* Logo and branding */}
         <div className="flex justify-center mb-8">
           <Link to="/" className="flex items-center space-x-2 group">
             <div className="relative">
-              <div className="absolute inset-0 bg-indigo-600 rounded-full blur-md opacity-30 group-hover:opacity-70 transition-opacity"></div>
-              <SparklesIcon className="h-8 w-8 text-indigo-600 relative z-10 animate-pulse" />
+              <div className={`absolute inset-0 rounded-full blur-md opacity-30 group-hover:opacity-70 transition-opacity ${
+                darkMode ? 'bg-indigo-400' : 'bg-indigo-600'
+              }`}></div>
+              <SparklesIcon className={`h-8 w-8 relative z-10 animate-pulse ${
+                darkMode ? 'text-indigo-400' : 'text-indigo-600'
+              }`} />
             </div>
-            <span className="font-bold text-xl text-indigo-800">
+            <span className={`font-bold text-xl ${
+              darkMode 
+                ? 'text-white' 
+                : 'text-indigo-800'
+            }`}>
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
                 AI Digest
               </span>
@@ -100,18 +122,26 @@ function Login() {
           </Link>
         </div>
 
-        <div className="bg-white/80 backdrop-filter backdrop-blur-sm shadow-xl rounded-2xl p-8 border border-gray-100 animate-slideInUp">
+        <div className={`${
+          darkMode 
+            ? 'bg-gray-800/80 backdrop-filter backdrop-blur-sm border-gray-700' 
+            : 'bg-white/80 backdrop-filter backdrop-blur-sm border-gray-100'
+        } shadow-xl rounded-2xl p-8 border animate-slideInUp`}>
           <h2 className="text-center text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">
             Welcome back
           </h2>
-          <p className="text-center text-gray-500 mb-8">
+          <p className={`text-center mb-8 ${
+            darkMode ? 'text-gray-400' : 'text-gray-500'
+          }`}>
             Sign in to continue to your AI Digest dashboard
           </p>
 
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
-                <label htmlFor="email-address" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email-address" className={`block text-sm font-medium mb-1 ${
+                  darkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Email address
                 </label>
                 <input
@@ -122,13 +152,19 @@ function Login() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-all"
+                  className={`appearance-none relative block w-full px-4 py-3 border placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:z-10 sm:text-sm transition-all ${
+                    darkMode 
+                      ? 'border-gray-600 bg-gray-700 text-gray-100' 
+                      : 'border-gray-300 text-gray-900'
+                  }`}
                   placeholder="you@example.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="password" className={`block text-sm font-medium mb-1 ${
+                  darkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Password
                 </label>
                 <input
@@ -139,7 +175,11 @@ function Login() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-all"
+                  className={`appearance-none relative block w-full px-4 py-3 border placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:z-10 sm:text-sm transition-all ${
+                    darkMode 
+                      ? 'border-gray-600 bg-gray-700 text-gray-100' 
+                      : 'border-gray-300 text-gray-900'
+                  }`}
                   placeholder="Enter your password"
                 />
               </div>
@@ -168,10 +208,14 @@ function Login() {
           <div className="mt-8">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-200"></div>
+                <div className={`w-full border-t ${
+                  darkMode ? 'border-gray-700' : 'border-gray-200'
+                }`}></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500">Or continue with</span>
+                <span className={`px-4 ${
+                  darkMode ? 'bg-gray-800 text-gray-400' : 'bg-white text-gray-500'
+                }`}>Or continue with</span>
               </div>
             </div>
 
@@ -179,7 +223,11 @@ function Login() {
               <button
                 onClick={handleGoogleSignIn}
                 disabled={loading}
-                className="w-full flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-all"
+                className={`w-full flex justify-center items-center py-3 px-4 border rounded-lg shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-all ${
+                  darkMode 
+                    ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600' 
+                    : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}
               >
                 <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                   <path
@@ -213,7 +261,9 @@ function Login() {
           </div>
         </div>
 
-        <div className="text-center mt-8 text-gray-500 text-sm animate-fadeIn animation-delay-300">
+        <div className={`text-center mt-8 text-sm animate-fadeIn animation-delay-300 ${
+          darkMode ? 'text-gray-400' : 'text-gray-500'
+        }`}>
           <p>By signing in, you agree to our <a href="#" className="text-indigo-600 hover:text-indigo-500">Terms of Service</a> and <a href="#" className="text-indigo-600 hover:text-indigo-500">Privacy Policy</a></p>
         </div>
       </div>
@@ -231,6 +281,17 @@ function Login() {
 
         .animation-delay-300 {
           animation-delay: 0.3s;
+        }
+        
+        @keyframes floatingSlow {
+          0%, 100% { transform: translateY(0) translateX(0); }
+          25% { transform: translateY(-10px) translateX(10px); }
+          50% { transform: translateY(-20px) translateX(-10px); }
+          75% { transform: translateY(-10px) translateX(-20px); }
+        }
+
+        .animate-floatingSlow {
+          animation: floatingSlow 15s ease-in-out infinite;
         }
       `}</style>
     </div>
