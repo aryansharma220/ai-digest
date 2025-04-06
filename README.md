@@ -4,11 +4,17 @@ AI Digest is a modern platform that automatically collects, summarizes, and cate
 
 ![image](https://github.com/user-attachments/assets/94bb8858-4d49-4e20-9b3f-179d41720eac)
 
+## Demo
+
+Uploading Product demo intro - Made with Clipchamp.mp4…
+
+
+
 
 ## Table of Contents
 - [Features](#features)
-- [Demo](#demo)
 - [Architecture](#architecture)
+- [Data Flow Diagrma](#data-flow-diagram)
 - [Technology Stack](#technology-stack)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -31,10 +37,6 @@ AI Digest is a modern platform that automatically collects, summarizes, and cate
 - **User Authentication**: Secure sign-in options including Google OAuth
 - **Responsive Design**: Fully responsive interface works on all devices
 
-## Demo
-
-[![AI Digest Demo Video](./screenshots/demo-thumbnail.png)](https://youtu.be/your-demo-link)
-*[Video placeholder: Demo video thumbnail linking to YouTube]*
 
 ## Architecture
 
@@ -47,6 +49,10 @@ AI Digest follows a modern web application architecture:
 - **Authentication**: Firebase Authentication for secure user management
 
 ![image](https://github.com/user-attachments/assets/d0507ee7-a448-44df-94de-614cf23f0e4d)
+
+## Data Flow Diagram
+
+![image](https://github.com/user-attachments/assets/87ff55a3-e9d0-4f5d-aa96-5237cad23a4f)
 
 
 ## Technology Stack
