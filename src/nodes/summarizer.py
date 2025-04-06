@@ -72,10 +72,42 @@ class Summarizer:
     def summarize_model(self, model: Dict[str, Any]) -> SummaryItem:
         """Summarize an AI model."""
         try:
-            model_card = model.get('model_card', {})
-            description = model_card.get('description', '')
+            # Extract description from multiple possible locations
+            description = model.get('description', '')
             
-            summary = self._extract_key_points(description)
+            # If description is still empty, try model_card
+            if not description and 'model_card' in model.get('details', {}):
+                description = model['details']['model_card'].get('description', '')
+            
+            # If still empty, check other potential locations
+            if not description:
+                # Try direct details.description
+                if isinstance(model.get('details', {}), dict):
+                    description = model['details'].get('description', '')
+                
+                # Try to construct a description from metadata
+                if not description:
+                    tasks = []
+                    if 'model_card' in model.get('details', {}):
+                        tasks = model['details']['model_card'].get('tasks', [])
+                    
+                    tags = []
+                    if 'tags' in model.get('details', {}):
+                        tags = model['details'].get('tags', [])
+                    
+                    if tasks or tags:
+                        description = f"Model specialized in {', '.join(tasks) if tasks else 'AI tasks'}"
+                        if tags:
+                            description += f". Tags: {', '.join(tags)}"
+                    else:
+                        # Last resort
+                        description = f"A machine learning model: {model.get('name', '')}"
+            
+            # Extract key points or use the description as is
+            if description:
+                summary = self._extract_key_points(description)
+            else:
+                summary = "No detailed description available for this model."
 
             return SummaryItem(
                 title=model.get('name', ''),
@@ -85,10 +117,10 @@ class Summarizer:
                 date=datetime.now(),
                 metadata={
                     'downloads': model.get('downloads', 0),
-                    'tasks': model_card.get('tasks', []),
-                    'language': model_card.get('language'),
-                    'license': model_card.get('license'),
-                    'tags': model.get('tags', [])
+                    'tasks': model.get('details', {}).get('model_card', {}).get('tasks', []),
+                    'language': model.get('details', {}).get('model_card', {}).get('language'),
+                    'license': model.get('details', {}).get('model_card', {}).get('license'),
+                    'tags': model.get('details', {}).get('tags', [])
                 }
             )
         except Exception as e:

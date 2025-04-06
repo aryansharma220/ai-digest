@@ -207,5 +207,32 @@ class ArxivFetcher:
         for entry in root.findall("{http://www.w3.org/2005/Atom}entry"):
             title = entry.find("{http://www.w3.org/2005/Atom}title").text
             summary = entry.find("{http://www.w3.org/2005/Atom}summary").text
-            papers.append({"title": title, "summary": summary})
+            
+            # Extract paper ID and URL
+            paper_id = None
+            url = None
+            
+            # Find the id element which contains the arxiv ID
+            id_element = entry.find("{http://www.w3.org/2005/Atom}id")
+            if id_element is not None and id_element.text:
+                # Extract the arxiv ID from the URL
+                id_text = id_element.text
+                if "arxiv.org/abs/" in id_text:
+                    paper_id = id_text.split("arxiv.org/abs/")[-1]
+                    url = f"https://arxiv.org/abs/{paper_id}"
+            
+            # Find the direct URL if available
+            links = entry.findall("{http://www.w3.org/2005/Atom}link")
+            for link in links:
+                if link.get("rel") == "alternate" or link.get("title") == "pdf":
+                    url = link.get("href")
+                    break
+            
+            paper = {
+                "title": title, 
+                "summary": summary,
+                "id": paper_id,
+                "url": url
+            }
+            papers.append(paper)
         return papers

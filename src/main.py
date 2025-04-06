@@ -142,20 +142,54 @@ class AIDiscoveryAgent:
             logger.info("Processing Hugging Face models...")
             for model in models:
                 try:
+                    # Create model URL if not present
+                    if 'url' not in model:
+                        model_id = model.get('id', '').strip()
+                        if model_id:
+                            model['url'] = f"https://huggingface.co/{model_id}"
+                        else:
+                            model['url'] = None
+                    
+                    # Improve content extraction with fallbacks
+                    model_description = ""
+                    # Try multiple paths to get meaningful content
+                    if 'details' in model:
+                        if 'model_card' in model['details']:
+                            model_description = model['details']['model_card'].get('description', '')
+                        
+                        # If still empty, try additional paths
+                        if not model_description and isinstance(model['details'], dict):
+                            if 'description' in model['details']:
+                                model_description = model['details']['description']
+                            elif 'tags' in model['details']:
+                                model_description = f"Model tags: {', '.join(model['details']['tags'])}"
+                    
+                    # Last resort fallback
+                    if not model_description:
+                        model_description = f"A {model.get('name', 'machine learning')} model from Hugging Face"
+                    
+                    # Set description in model for summarizer to use
+                    model['description'] = model_description
+                    
                     summary = self.summarizer.summarize_model(model)
                     tagged = self.tagger.tag_content({
                         'id': model['id'],
                         'title': model['name'],
-                        'description': model['details']['model_card'].get('description', ''),
+                        'description': model_description,
                         'metadata': model['details']
                     })
                     
+                    # Ensure we have content for storage
+                    # If summary.content is empty, use the model_description
+                    content_to_store = summary.content if summary.content else model_description
+                    
                     self.storage.store_summary({
                         'title': summary.title,
-                        'content': summary.content,
+                        'content': content_to_store,
                         'source': 'huggingface',
                         'category': tagged.primary_category,
                         'tags': list(tagged.tags),
+                        'url': model['url'],
                         'metadata': tagged.metadata
                     })
                 except Exception as e:
@@ -165,6 +199,21 @@ class AIDiscoveryAgent:
             logger.info("Processing ArXiv papers...")
             for paper in papers:
                 try:
+                    # Get or create the ArXiv URL
+                    if 'url' not in paper:
+                        # Extract paper ID from title or other fields if available
+                        paper_id = paper.get('id', '').strip()
+                        if not paper_id:
+                            # Try to extract ID from title by removing spaces and special chars
+                            import re
+                            paper_id = re.sub(r'\W+', '', paper.get('title', ''))
+                        
+                        # Create ArXiv URL (if ID exists)
+                        if paper_id:
+                            paper['url'] = f"https://arxiv.org/abs/{paper_id}"
+                        else:
+                            paper['url'] = None
+                    
                     summary = self.summarizer.summarize_paper(paper)
                     tagged = self.tagger.tag_content({
                         'id': paper['title'],
@@ -179,6 +228,7 @@ class AIDiscoveryAgent:
                         'source': 'arxiv',
                         'category': tagged.primary_category,
                         'tags': list(tagged.tags),
+                        'url': paper.get('url'),  # Store the URL
                         'metadata': tagged.metadata
                     })
                 except Exception as e:
