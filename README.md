@@ -2,8 +2,8 @@
 
 AI Digest is a modern platform that automatically collects, summarizes, and categorizes the latest developments in artificial intelligence from multiple sources including GitHub, Hugging Face, and ArXiv. Stay ahead of the AI revolution with personalized content delivered in a digestible format.
 
-![AI Digest Dashboard](./screenshots/dashboard.png)
-*[Screenshot placeholder: Main dashboard showing digest cards]*
+![image](https://github.com/user-attachments/assets/94bb8858-4d49-4e20-9b3f-179d41720eac)
+
 
 ## Table of Contents
 - [Features](#features)
@@ -46,8 +46,8 @@ AI Digest follows a modern web application architecture:
 - **Database**: MongoDB for storing user data and content digests
 - **Authentication**: Firebase Authentication for secure user management
 
-![Architecture Diagram](./screenshots/architecture.png)
-*[Diagram placeholder: System architecture diagram]*
+![image](https://github.com/user-attachments/assets/d0507ee7-a448-44df-94de-614cf23f0e4d)
+
 
 ## Technology Stack
 
@@ -152,24 +152,22 @@ python main.py
 ## Screenshots
 
 ### Landing Page
-![Landing Page](./screenshots/landing.png)
-*[Screenshot placeholder: Landing page with features and CTAs]*
+![image](https://github.com/user-attachments/assets/8b0c385f-3b6d-431e-80a5-30770a6359cd)
+
 
 ### User Dashboard
-![User Dashboard](./screenshots/dashboard-personalized.png)
-*[Screenshot placeholder: Personalized dashboard with user content]*
+![image](https://github.com/user-attachments/assets/cc181759-49ab-49a4-972a-467523cb66fe)
+
 
 ### Digest Detail View
-![Digest Detail](./screenshots/digest-detail.png)
-*[Screenshot placeholder: Detailed view of a single digest]*
+![image](https://github.com/user-attachments/assets/0916676d-c7fd-49ea-9513-0fe142b95fa8)
 
-### User Preferences
-![User Preferences](./screenshots/preferences.png)
-*[Screenshot placeholder: User preferences screen]*
 
 ### Dark Mode
-![Dark Mode](./screenshots/dark-mode.png)
-*[Screenshot placeholder: Application in dark mode]*
+![image](https://github.com/user-attachments/assets/9bdb14e1-d1af-496a-8aa5-51c25f1f4c61)
+![image](https://github.com/user-attachments/assets/52959ff8-d731-4761-9638-3bceae1c0a71)
+
+
 
 ## Future Improvements and Implementations
 
@@ -210,14 +208,10 @@ est)
 - [ ] Enhanced recommendation system
 
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Contact
 
-Project Link: [https://github.com/yourusername/ai-digest](https://github.com/yourusername/ai-digest)
+Project Link: [https://github.com/aryansharma220/ai-digest](https://github.com/aryansharma220/ai-digest)
 
 ---
 
-<p align="center">Made with ❤️ by Your Name</p>
+<p align="center">Made with ❤️ by Cyber Corsair</p>
